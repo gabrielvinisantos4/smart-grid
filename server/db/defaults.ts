@@ -18,7 +18,12 @@ export interface SeedMedia {
 
 /** Imagens que acompanham o projeto (prints reais), copiadas para os uploads no primeiro boot. */
 export const seedLocalMedia: { id: string; file: string; alt: string }[] = [
+  { id: 'm-result-daniellemello', file: 'resultado-daniellemelloa.jpg', alt: 'Reel de @daniellemelloa: é bem assim' },
+  { id: 'm-result-rafalavalle-85', file: 'resultado-dra-rafalavalle-85mil.jpg', alt: 'Reel da @dra.rafalavalle: a libido da mulher na menopausa' },
+  { id: 'm-result-rafalavalle-78', file: 'resultado-dra-rafalavalle-78mil.jpg', alt: 'Reel da @dra.rafalavalle: libido baixa nem sempre é emocional' },
+  { id: 'm-result-brancogarage', file: 'resultado-branco-garage.jpg', alt: 'Vídeo da @branco.garage: gasolina ou álcool' },
   { id: 'm-result-tresrios', file: 'resultado-tresriosacabamentos.jpg', alt: 'Reel da Três Rios Acabamentos: Mega Feirão' },
+  { id: 'm-result-panificadora', file: 'resultado-panificadoravalerio.jpg', alt: 'Reel da @panificadoravalerio: você é muito simpática' },
 ];
 
 const credit = (name: string, user: string) => ({
@@ -43,10 +48,6 @@ export const seedMedia: SeedMedia[] = [
   { id: 'm-clapper-hands', url: unsplash('photo-1780516000985-08f96af45c9c', 1600), alt: 'Mãos segurando claquete em fundo escuro', ...credit('Darko Sokoleski', 'sokoltge') },
   { id: 'm-clapper-bw', url: unsplash('photo-1619518594466-5bfc2dcbb83d', 1400), alt: 'Claquete em preto e branco', ...credit('Irham Setyaki', 'setyaki') },
   { id: 'm-lifestyle-bw', url: unsplash('photo-1607932066513-77aa8f68705d', 1400), alt: 'Retrato editorial em preto e branco', ...credit('kevin turcios', 'kevin_turcios') },
-  { id: 'm-reel-1', url: unsplash('photo-1665327469792-cf91f5b8d74c', 900), alt: 'Criadora gravando conteúdo no quarto', ...credit('Daria Trofimova', 'da161') },
-  { id: 'm-reel-2', url: unsplash('photo-1654116970264-2f0fa1a26ccc', 900), alt: 'Gravação de vídeo em frente à câmera', ...credit('Anna Hecker', 'annaelise') },
-  { id: 'm-reel-3', url: unsplash('photo-1669255034434-ebefed36da64', 900), alt: 'Especialista gravando conteúdo educativo', ...credit('Alan Quirvan', 'quirvan') },
-  { id: 'm-reel-4', url: unsplash('photo-1669255034447-92a04063c6b8', 900), alt: 'Bastidores de gravação com celular', ...credit('Alan Quirvan', 'quirvan') },
   { id: 'm-dark-set', url: unsplash('photo-1681137063068-081072cf04b4'), alt: 'Set de gravação no escuro', ...credit('Huong Do', 'huongddn') },
 ];
 
@@ -150,12 +151,12 @@ export const defaultSettings: SiteSettings = {
     highlightValue: '+397 mil',
     highlightLabel: 'visualizações orgânicas em apenas seis conteúdos',
     items: [
-      { id: 'r1', mediaId: 'm-reel-1', views: '120 mil', caption: '', client: '', handle: 'daniellemelloa', niche: 'Lifestyle', url: '' },
-      { id: 'r2', mediaId: 'm-reel-2', views: '85 mil', caption: '', client: '', handle: 'dra.rafalavalle', niche: 'Saúde feminina', url: '' },
-      { id: 'r3', mediaId: 'm-reel-3', views: '78,4 mil', caption: '', client: '', handle: 'dra.rafalavalle', niche: 'Saúde feminina', url: '' },
-      { id: 'r4', mediaId: 'm-reel-4', views: '54,8 mil', caption: '', client: '', handle: 'branco.garage', niche: 'Automotivo', url: '' },
+      { id: 'r1', mediaId: 'm-result-daniellemello', views: '120 mil', caption: '', client: '', handle: 'daniellemelloa', niche: 'Lifestyle', url: '' },
+      { id: 'r2', mediaId: 'm-result-rafalavalle-85', views: '85 mil', caption: '', client: '', handle: 'dra.rafalavalle', niche: 'Saúde feminina', url: '' },
+      { id: 'r3', mediaId: 'm-result-rafalavalle-78', views: '78,4 mil', caption: '', client: '', handle: 'dra.rafalavalle', niche: 'Saúde feminina', url: '' },
+      { id: 'r4', mediaId: 'm-result-brancogarage', views: '54,8 mil', caption: '', client: '', handle: 'branco.garage', niche: 'Automotivo', url: '' },
       { id: 'r6', mediaId: 'm-result-tresrios', views: '48,6 mil', caption: '', client: 'Três Rios Acabamentos', handle: 'tresriosacabamentos', niche: 'Revestimentos', url: '' },
-      { id: 'r5', mediaId: 'm-phone-capture', views: '11,1 mil', caption: '', client: '', handle: 'panificadoravalerio', niche: 'Panificadora', url: '' },
+      { id: 'r5', mediaId: 'm-result-panificadora', views: '11,1 mil', caption: '', client: '', handle: 'panificadoravalerio', niche: 'Panificadora', url: '' },
     ],
   },
   gallery: {
