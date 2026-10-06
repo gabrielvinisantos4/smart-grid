@@ -6,7 +6,7 @@ import { createSession, destroySession, destroyUserSessions } from '../auth/sess
 import { loginSchema, passwordSchema } from '../services/schemas.ts';
 import { HttpError } from '../middleware/errors.ts';
 import { requireAuth } from '../middleware/auth.ts';
-import { rateLimit } from '../middleware/security.ts';
+import { noStore, rateLimit } from '../middleware/security.ts';
 
 function setSessionCookie(res: Response, token: string, expiresAt: number) {
   res.cookie(SESSION_COOKIE, token, {
@@ -48,9 +48,8 @@ export function authRoutes(ctx: AppContext) {
     res.status(204).end();
   });
 
-  router.get('/me', (req, res) => {
-    if (!req.user) return res.status(401).json({ error: 'Não autenticado.' });
-    res.json({ user: req.user });
+  router.get('/me', noStore, (req, res) => {
+    res.json({ user: req.user ?? null });
   });
 
   router.post('/password', requireAuth, async (req, res) => {

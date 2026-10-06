@@ -10,11 +10,11 @@
   "scripts": {
     "dev": "concurrently -k -n api,web -c gray,white \"npm:dev:server\" \"npm:dev:web\"",
     "dev:web": "vite",
-    "dev:server": "tsx watch --env-file-if-exists=.env server/index.ts",
+    "dev:server": "NODE_OPTIONS=--disable-warning=ExperimentalWarning tsx watch --env-file-if-exists=.env server/index.ts",
     "build": "tsc -b && vite build && tsc -p tsconfig.server.json",
-    "start": "NODE_ENV=production node --env-file-if-exists=.env dist-server/server/index.js",
+    "start": "NODE_ENV=production node --disable-warning=ExperimentalWarning --env-file-if-exists=.env dist-server/server/index.js",
     "typecheck": "tsc -b && tsc -p tsconfig.server.json --noEmit",
-    "test": "node --test --import tsx server/**/*.test.ts"
+    "test": "node --disable-warning=ExperimentalWarning --test --import tsx server/**/*.test.ts"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
