@@ -141,15 +141,15 @@ export const defaultSettings: SiteSettings = {
   results: {
     eyebrow: 'Resultados',
     title: 'Conteúdo que *para o scroll.*',
-    text: 'Vídeos produzidos para marcas e especialistas, com roteiro, captação e edição pensados para retenção.',
+    text: 'Pessoas e marcas reais que confiaram no nosso roteiro, captação e edição, e os números que cada vídeo alcançou.',
     highlightValue: '+349 mil',
     highlightLabel: 'visualizações orgânicas em apenas cinco conteúdos',
     items: [
-      { id: 'r1', mediaId: 'm-reel-1', views: '120 mil', caption: 'é bem assim', client: 'Lifestyle', url: '' },
-      { id: 'r2', mediaId: 'm-reel-2', views: '85 mil', caption: 'A libido da mulher na menopausa.', client: 'Saúde feminina', url: '' },
-      { id: 'r3', mediaId: 'm-reel-3', views: '78,4 mil', caption: 'Libido baixa nem sempre é emocional.', client: 'Saúde feminina', url: '' },
-      { id: 'r4', mediaId: 'm-reel-4', views: '54,8 mil', caption: 'Gasolina ou álcool?', client: 'Automotivo', url: '' },
-      { id: 'r5', mediaId: 'm-phone-capture', views: '11,1 mil', caption: 'você é muito simpática,', client: 'Varejo', url: '' },
+      { id: 'r1', mediaId: 'm-reel-1', views: '120 mil', caption: '', client: '', handle: '', niche: 'Lifestyle', url: '' },
+      { id: 'r2', mediaId: 'm-reel-2', views: '85 mil', caption: '', client: '', handle: '', niche: 'Saúde feminina', url: '' },
+      { id: 'r3', mediaId: 'm-reel-3', views: '78,4 mil', caption: '', client: '', handle: '', niche: 'Saúde feminina', url: '' },
+      { id: 'r4', mediaId: 'm-reel-4', views: '54,8 mil', caption: '', client: '', handle: '', niche: 'Automotivo', url: '' },
+      { id: 'r5', mediaId: 'm-phone-capture', views: '11,1 mil', caption: '', client: '', handle: '', niche: 'Varejo', url: '' },
     ],
   },
   gallery: {

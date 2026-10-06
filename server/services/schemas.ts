@@ -93,6 +93,10 @@ export const siteSettingsSchema = z.object({
           views: text(24),
           caption: text(120),
           client: text(60),
+          handle: text(60)
+            .default('')
+            .transform((v) => v.replace(/^@/, '').replace(/^https?:\/\/(www\.)?(instagram|tiktok)\.com\/@?/, '').replace(/\/.*$/, '')),
+          niche: text(60).default(''),
           url: z.union([z.literal(''), z.url().max(500).refine((v) => v.startsWith('https://'), 'Use um link https://')]),
         }),
       )

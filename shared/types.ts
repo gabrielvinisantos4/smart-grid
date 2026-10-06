@@ -103,13 +103,22 @@ export interface GalleryItem {
   grayscale: boolean;
 }
 
-/** Card vertical estilo Reels/TikTok com prova social (visualizações). */
+/**
+ * Card vertical estilo Reels/TikTok com prova social: o print do vídeo,
+ * quem é a pessoa/marca e quantas visualizações teve.
+ */
 export interface ResultItem {
   id: string;
   mediaId: string;
   views: string;
+  /** Texto sobreposto ao card. Deixe vazio ao usar prints, que já trazem a legenda. */
   caption: string;
+  /** Nome da pessoa ou marca que aparece no vídeo. */
   client: string;
+  /** @ do perfil (Instagram/TikTok). */
+  handle: string;
+  /** Nicho/segmento, ex.: "Saúde feminina". */
+  niche: string;
   url: string;
 }
 

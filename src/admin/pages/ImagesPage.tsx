@@ -313,9 +313,11 @@ function ResultsEditor({
       </Card>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="max-w-xl text-[13px] text-mist">Envie a capa (print) de cada Reel/TikTok em formato vertical e informe as visualizações. O link é opcional.</p>
+        <p className="max-w-xl text-[13px] text-mist">
+          Envie o print de cada Reel/TikTok exatamente como aparece no app e diga quem é a pessoa ou marca. O nome e o @ aparecem embaixo do vídeo no site.
+        </p>
         {!readOnly && (
-          <Button size="sm" icon={<Plus className="h-4 w-4" />} onClick={() => onChange({ items: [...items, { id: uid(), mediaId: '', views: '', caption: '', client: '', url: '' }] })}>
+          <Button size="sm" icon={<Plus className="h-4 w-4" />} onClick={() => onChange({ items: [...items, { id: uid(), mediaId: '', views: '', caption: '', client: '', handle: '', niche: '', url: '' }] })}>
             Adicionar vídeo
           </Button>
         )}
@@ -325,22 +327,28 @@ function ResultsEditor({
         {items.map((item, i) => (
           <div key={item.id} className="glass rounded-[22px] p-3">
             <div className="grid grid-cols-[110px_1fr] gap-3">
-              <MediaSlot label="Capa" aspect="aspect-[9/16]" allowClear={false} disabled={readOnly} media={media.get(item.mediaId)} onChange={(id) => id && patch(item.id, { mediaId: id })} />
+              <MediaSlot label="Print do vídeo" aspect="aspect-[9/16]" allowClear={false} disabled={readOnly} media={media.get(item.mediaId)} onChange={(id) => id && patch(item.id, { mediaId: id })} />
               <div className="space-y-3">
+                <Field label="Nome da pessoa / marca">
+                  <TextInput disabled={readOnly} value={item.client} maxLength={60} placeholder="Dra. Ana Souza" onChange={(e) => patch(item.id, { client: e.target.value })} className="h-10" />
+                </Field>
+                <Field label="@ do perfil">
+                  <TextInput disabled={readOnly} value={item.handle ?? ''} maxLength={60} placeholder="draanasouza" onChange={(e) => patch(item.id, { handle: e.target.value })} className="h-10" />
+                </Field>
                 <Field label="Visualizações">
                   <TextInput disabled={readOnly} value={item.views} maxLength={24} placeholder="120 mil" onChange={(e) => patch(item.id, { views: e.target.value })} className="h-10" />
-                </Field>
-                <Field label="Cliente / nicho">
-                  <TextInput disabled={readOnly} value={item.client} maxLength={60} onChange={(e) => patch(item.id, { client: e.target.value })} className="h-10" />
                 </Field>
               </div>
             </div>
             <div className="mt-3 space-y-3">
-              <Field label="Legenda na tela">
-                <TextInput disabled={readOnly} value={item.caption} maxLength={120} onChange={(e) => patch(item.id, { caption: e.target.value })} className="h-10" />
+              <Field label="Nicho (opcional)">
+                <TextInput disabled={readOnly} value={item.niche ?? ''} maxLength={60} placeholder="Saúde feminina" onChange={(e) => patch(item.id, { niche: e.target.value })} className="h-10" />
               </Field>
-              <Field label="Link do post (opcional)">
+              <Field label="Link do post (opcional)" hint="Sem link, o card leva ao perfil do @.">
                 <TextInput disabled={readOnly} value={item.url} maxLength={500} placeholder="https://instagram.com/reel/…" onChange={(e) => patch(item.id, { url: e.target.value })} className="h-10" />
+              </Field>
+              <Field label="Texto sobre o vídeo (opcional)" hint="Deixe vazio ao usar prints, que já trazem a legenda.">
+                <TextInput disabled={readOnly} value={item.caption} maxLength={120} onChange={(e) => patch(item.id, { caption: e.target.value })} className="h-10" />
               </Field>
             </div>
             {!readOnly && (
