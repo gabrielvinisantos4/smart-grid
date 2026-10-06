@@ -101,13 +101,13 @@ export const seedServices = [
 
 export const defaultSettings: SiteSettings = {
   brand: {
-    name: 'Noir Studio',
+    name: 'Feed Studio',
     tagline: 'Social Media & Produção Audiovisual',
     logoId: null,
     accentColor: '#e8e2d6',
   },
   seo: {
-    pageTitle: 'Noir Studio — Orçamento personalizado de conteúdo',
+    pageTitle: 'Feed Studio — Orçamento personalizado de conteúdo',
     description: 'Monte seu plano de conteúdo personalizado e descubra o investimento ideal para sua marca.',
   },
   hero: {
@@ -197,7 +197,7 @@ export const defaultSettings: SiteSettings = {
   contact: {
     whatsapp: '5511999999999',
     instagrams: ['gabrielvinisantos', 'danielemochii'],
-    email: 'contato@noirstudio.com.br',
+    email: '',
     city: 'São Paulo — Brasil',
     whatsappIntro: 'Olá! Gostaria de solicitar um orçamento personalizado.',
   },

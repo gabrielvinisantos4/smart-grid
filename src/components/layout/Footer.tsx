@@ -65,7 +65,12 @@ export function Footer() {
 
         <p
           aria-hidden
-          className="pointer-events-none mt-20 select-none whitespace-nowrap text-center text-[17vw] font-medium leading-[0.8] tracking-[-0.06em] text-transparent [background:linear-gradient(180deg,rgb(255_255_255/0.14),rgb(255_255_255/0))] [-webkit-background-clip:text] [background-clip:text]"
+          className="pointer-events-none mt-20 select-none whitespace-nowrap pb-[0.06em] text-center text-[min(17vw,15rem)] font-medium leading-[0.85] tracking-[-0.06em] text-transparent"
+          style={{
+            backgroundImage: 'linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.01))',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+          }}
         >
           {brand.name}
         </p>
