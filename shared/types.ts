@@ -169,6 +169,16 @@ export interface SiteSettings {
     emptyText: string;
     disclaimer: string;
   };
+  /** Seção com vídeo controlado pela rolagem (scroll scrub). */
+  process: {
+    enabled: boolean;
+    eyebrow: string;
+    title: string;
+    text: string;
+    /** Caminho do manifest.json gerado por `npm run frames`. */
+    framesPath: string;
+    steps: Pillar[];
+  };
   results: {
     eyebrow: string;
     title: string;

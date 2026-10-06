@@ -6,7 +6,7 @@ import { useQuoteSubmit } from '@/hooks/useQuoteSubmit';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Modal } from '@/components/ui/Modal';
 import { Reveal } from '@/components/ui/Reveal';
-import { IS_DEMO, SECTION_IDS } from '@/config/site';
+import { IS_DEMO, SECTION_IDS, sectionIndex } from '@/config/site';
 import { ServiceCard } from './ServiceCard';
 import { QuantityPanel } from './QuantityPanel';
 import { QuoteSummary } from './QuoteSummary';
@@ -66,7 +66,7 @@ export function Configurator() {
       <div className="pointer-events-none absolute right-0 top-40 h-[520px] w-[520px] rounded-full bg-white/[0.035] blur-[140px]" />
 
       <div className="relative mx-auto max-w-[1400px] px-5 md:px-8">
-        <SectionHeading index="03" eyebrow={texts.eyebrow} title={texts.title} text={texts.text} />
+        <SectionHeading index={sectionIndex(3, data.settings.process.enabled)} eyebrow={texts.eyebrow} title={texts.title} text={texts.text} />
 
         <Reveal delay={0.1} className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] pt-6">
           <StepIndicator progress={progress} />

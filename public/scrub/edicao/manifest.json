@@ -1,0 +1,8 @@
+{
+  "frames": 95,
+  "width": 544,
+  "height": 720,
+  "fps": 12.5,
+  "pattern": "frame-{n}.webp",
+  "pad": 3
+}

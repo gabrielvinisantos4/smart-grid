@@ -79,6 +79,18 @@ export const siteSettingsSchema = z.object({
     emptyText: text(200),
     disclaimer: text(200),
   }),
+  process: z.object({
+    enabled: z.boolean(),
+    eyebrow: text(60),
+    title: text(160),
+    text: text(300),
+    framesPath: z
+      .string()
+      .trim()
+      .max(200)
+      .regex(/^(\/?[\w-]+\/)*manifest\.json$/, 'Use o caminho do manifest.json, ex.: scrub/edicao/manifest.json'),
+    steps: z.array(z.object({ title: text(40), text: text(200) })).min(1).max(6),
+  }),
   results: z.object({
     eyebrow: text(60),
     title: text(160),

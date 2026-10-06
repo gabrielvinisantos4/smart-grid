@@ -10,7 +10,7 @@ import { RichText } from '@/components/ui/RichText';
 import { cn } from '@/lib/cn';
 import { useSettingsDraft } from '../hooks/useSettingsDraft';
 import { useMediaMap } from '../hooks/useMediaMap';
-import { Badge, Card, Field, PageHeader, ReadOnlyBanner, Select, Skeleton, TextArea, TextInput } from '../components/ui';
+import { Badge, Card, Field, PageHeader, ReadOnlyBanner, Select, Skeleton, TextArea, TextInput, Toggle } from '../components/ui';
 import { MediaSlot } from '../components/MediaPicker';
 import { SaveBar } from '../components/SaveBar';
 import { useToast } from '../components/Toast';
@@ -39,8 +39,9 @@ function Group({ title, description, children }: { title: string; description?: 
 const HINT_ACCENT = 'Use *asteriscos* para destacar palavras em itálico serifado.';
 
 function TextsTab({ draft, update, ro }: { draft: SiteSettings; update: Update; ro: boolean }) {
-  const { hero, about, configurator: cfg, results, gallery, finalCta, footer, seo } = draft;
+  const { hero, about, process, configurator: cfg, results, gallery, finalCta, footer, seo } = draft;
   const setPillar = (i: number, p: Partial<Pillar>) => update('about', { pillars: about.pillars.map((x, j) => (i === j ? { ...x, ...p } : x)) });
+  const setStep = (i: number, p: Partial<Pillar>) => update('process', { steps: process.steps.map((x, j) => (i === j ? { ...x, ...p } : x)) });
 
   return (
     <div className="space-y-5">
@@ -104,6 +105,47 @@ function TextsTab({ draft, update, ro }: { draft: SiteSettings; update: Update; 
             </Button>
           )}
         </div>
+      </Group>
+
+      <Group title="Processo — vídeo na rolagem" description="O vídeo avança e volta conforme a pessoa rola a página. As etapas acompanham o progresso do vídeo.">
+        <div className="flex items-center justify-between rounded-2xl border border-white/[0.07] bg-black/20 px-4 py-3 md:col-span-2">
+          <div>
+            <p className="text-[14px]">{process.enabled ? 'Seção visível' : 'Seção oculta'}</p>
+            <p className="text-[12px] text-fog">Aparece logo depois de “O estúdio”.</p>
+          </div>
+          <Toggle checked={process.enabled} disabled={ro} onChange={(v) => update('process', { enabled: v })} label="Mostrar seção de processo" />
+        </div>
+        <Field label="Rótulo">
+          <TextInput disabled={ro} value={process.eyebrow} onChange={(e) => update('process', { eyebrow: e.target.value })} />
+        </Field>
+        <Field label="Título" hint={HINT_ACCENT}>
+          <TextInput disabled={ro} value={process.title} onChange={(e) => update('process', { title: e.target.value })} />
+        </Field>
+        <Field label="Texto" className="md:col-span-2">
+          <TextInput disabled={ro} value={process.text} onChange={(e) => update('process', { text: e.target.value })} />
+        </Field>
+        <div className="space-y-3 md:col-span-2">
+          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-mist">Etapas (dividem o vídeo em partes iguais)</p>
+          {process.steps.map((p, i) => (
+            <div key={i} className="grid gap-2 md:grid-cols-[200px_1fr_auto]">
+              <TextInput disabled={ro} value={p.title} onChange={(e) => setStep(i, { title: e.target.value })} placeholder="Etapa" />
+              <TextInput disabled={ro} value={p.text} onChange={(e) => setStep(i, { text: e.target.value })} placeholder="Descrição" />
+              {!ro && process.steps.length > 1 && (
+                <button onClick={() => update('process', { steps: process.steps.filter((_, j) => j !== i) })} className="flex h-11 w-11 items-center justify-center rounded-2xl text-bone/50 hover:bg-red-400/10 hover:text-red-300" aria-label="Remover etapa">
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+          ))}
+          {!ro && process.steps.length < 6 && (
+            <Button size="sm" variant="glass" icon={<Plus className="h-4 w-4" />} onClick={() => update('process', { steps: [...process.steps, { title: '', text: '' }] })}>
+              Adicionar etapa
+            </Button>
+          )}
+        </div>
+        <Field label="Quadros do vídeo" hint="Gerados com: npm run frames -- video.mp4 nome → use scrub/nome/manifest.json" className="md:col-span-2">
+          <TextInput disabled={ro} value={process.framesPath} onChange={(e) => update('process', { framesPath: e.target.value })} className="font-mono text-[13px]" />
+        </Field>
       </Group>
 
       <Group title="Resultados">

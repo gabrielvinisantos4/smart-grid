@@ -144,6 +144,19 @@ export const defaultSettings: SiteSettings = {
     emptyText: 'Selecione um ou mais formatos para começar a montar o seu plano.',
     disclaimer: 'Valores estimados. A proposta final é confirmada após o briefing.',
   },
+  process: {
+    enabled: true,
+    eyebrow: 'Processo',
+    title: 'Cada corte é *uma decisão.*',
+    text: 'Role a página e acompanhe uma edição de verdade, quadro a quadro.',
+    framesPath: 'scrub/edicao/manifest.json',
+    steps: [
+      { title: 'Roteiro', text: 'Pauta e gancho pensados para prender nos primeiros três segundos.' },
+      { title: 'Captação', text: 'Luz, enquadramento e direção, no estúdio ou no seu espaço.' },
+      { title: 'Edição', text: 'Cortes, legendas, cor e som com ritmo de cinema.' },
+      { title: 'Entrega', text: 'Arquivos prontos para Reels, TikTok e anúncios.' },
+    ],
+  },
   results: {
     eyebrow: 'Resultados',
     title: 'Conteúdo que *para o scroll.*',

@@ -8,7 +8,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SmartImage } from '@/components/ui/SmartImage';
 import { GALLERY_LAYOUTS, composeRows } from '@/data/galleryLayouts';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { SECTION_IDS, MOTION } from '@/config/site';
+import { SECTION_IDS, MOTION, sectionIndex } from '@/config/site';
 import { cn } from '@/lib/cn';
 
 export function Gallery() {
@@ -42,7 +42,7 @@ export function Gallery() {
   return (
     <section id={SECTION_IDS.gallery} className="relative py-28 md:py-40">
       <div className="mx-auto max-w-[1400px] px-5 md:px-8">
-        <SectionHeading index="04" eyebrow={gallery.eyebrow} title={gallery.title} text={gallery.text} />
+        <SectionHeading index={sectionIndex(4, data.settings.process.enabled)} eyebrow={gallery.eyebrow} title={gallery.title} text={gallery.text} />
 
         <div className="mt-16 flex flex-col gap-2.5 md:mt-24 md:gap-3">
           {composeRows(

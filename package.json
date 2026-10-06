@@ -15,7 +15,8 @@
     "start": "NODE_ENV=production node --disable-warning=ExperimentalWarning --env-file-if-exists=.env dist-server/server/index.js",
     "typecheck": "tsc -b && tsc -p tsconfig.server.json --noEmit",
     "test": "node --disable-warning=ExperimentalWarning --test --import tsx server/**/*.test.ts",
-    "build:demo": "tsx scripts/export-demo.ts && VITE_DEMO=1 vite build"
+    "build:demo": "tsx scripts/export-demo.ts && VITE_DEMO=1 vite build",
+    "frames": "tsx scripts/video-frames.ts"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",

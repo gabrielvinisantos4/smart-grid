@@ -6,7 +6,7 @@ import { useSiteData } from '@/hooks/useSiteData';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SmartImage } from '@/components/ui/SmartImage';
 import { Reveal } from '@/components/ui/Reveal';
-import { SECTION_IDS, MOTION } from '@/config/site';
+import { SECTION_IDS, MOTION, sectionIndex } from '@/config/site';
 import { cn } from '@/lib/cn';
 
 function profileUrl(item: ResultItem): string | null {
@@ -27,7 +27,7 @@ export function Results() {
     <section id={SECTION_IDS.results} className="relative overflow-hidden py-28 md:py-36">
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-white/[0.025] blur-[120px]" />
       <div className="relative mx-auto max-w-[1400px] px-5 md:px-8">
-        <SectionHeading index="02" eyebrow={results.eyebrow} title={results.title} text={results.text} />
+        <SectionHeading index={sectionIndex(2, data.settings.process.enabled)} eyebrow={results.eyebrow} title={results.title} text={results.text} />
 
         {results.highlightValue && (
           <Reveal delay={0.1} className="mt-12 flex flex-wrap items-end gap-x-6 gap-y-2 border-t border-white/[0.08] pt-8">
