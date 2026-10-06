@@ -5,7 +5,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { RichText } from '@/components/ui/RichText';
 import { SmartImage } from '@/components/ui/SmartImage';
 import { Reveal } from '@/components/ui/Reveal';
-import { WhatsAppIcon } from '@/components/ui/SocialIcons';
+import { InstagramIcon, WhatsAppIcon } from '@/components/ui/SocialIcons';
 import { SECTION_IDS } from '@/config/site';
 
 export function FinalCta() {
@@ -50,6 +50,22 @@ export function FinalCta() {
               </LinkButton>
             )}
           </Reveal>
+          {contact.instagrams.length > 0 && (
+            <Reveal delay={0.3} className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-bone/45">Siga no Instagram</span>
+              {contact.instagrams.map((handle) => (
+                <a
+                  key={handle}
+                  href={`https://instagram.com/${handle}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-[15px] text-bone/80 transition hover:text-bone"
+                >
+                  <InstagramIcon className="h-4 w-4" />@{handle}
+                </a>
+              ))}
+            </Reveal>
+          )}
         </div>
       </div>
     </section>

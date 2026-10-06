@@ -126,7 +126,10 @@ export const siteSettingsSchema = z.object({
       .trim()
       .transform((v) => v.replace(/\D/g, ''))
       .refine((v) => v === '' || (v.length >= 10 && v.length <= 15), 'WhatsApp inválido. Use DDI + DDD + número.'),
-    instagram: text(60).transform((v) => v.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/$/, '')),
+    instagrams: z
+      .array(text(60).transform((v) => v.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/.*$/, '')))
+      .max(6)
+      .transform((list) => [...new Set(list.filter(Boolean))]),
     email: z.union([z.literal(''), z.email().max(120)]),
     city: text(80),
     whatsappIntro: text(300).min(1),

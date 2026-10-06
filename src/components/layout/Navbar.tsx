@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { Brand } from '@/components/ui/Brand';
@@ -13,7 +13,17 @@ export function Navbar() {
   const { data } = useSiteData();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const instagram = data?.settings.contact.instagram;
+  const instagrams = data?.settings.contact.instagrams ?? [];
+  const [igOpen, setIgOpen] = useState(false);
+  const igRef = useRef<HTMLDivElement>(null);
+
+  // Fecha a lista de perfis ao tocar/clicar fora (no touch não existe mouseleave).
+  useEffect(() => {
+    if (!igOpen) return;
+    const onDown = (e: PointerEvent) => !igRef.current?.contains(e.target as Node) && setIgOpen(false);
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [igOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -51,16 +61,44 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          {instagram && (
-            <a
-              href={`https://instagram.com/${instagram}`}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden h-10 w-10 items-center justify-center rounded-full text-bone/70 transition hover:bg-white/5 hover:text-bone sm:flex"
-              aria-label="Instagram"
-            >
-              <InstagramIcon className="h-[18px] w-[18px]" />
-            </a>
+          {instagrams.length > 0 && (
+            <div ref={igRef} className="relative hidden sm:block" onMouseLeave={() => setIgOpen(false)}>
+              <button
+                type="button"
+                onClick={() => setIgOpen(true)}
+                onMouseEnter={() => setIgOpen(true)}
+                className="flex h-10 w-10 items-center justify-center rounded-full text-bone/70 transition hover:bg-white/5 hover:text-bone"
+                aria-label="Instagram"
+                aria-expanded={igOpen}
+              >
+                <InstagramIcon className="h-[18px] w-[18px]" />
+              </button>
+              <AnimatePresence>
+                {igOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    className="absolute right-0 top-full pt-2"
+                  >
+                    <div className="glass-strong min-w-[220px] rounded-2xl !bg-ink-100/95 p-1.5">
+                      {instagrams.map((handle) => (
+                        <a
+                          key={handle}
+                          href={`https://instagram.com/${handle}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[13.5px] text-bone/85 transition hover:bg-white/[0.06] hover:text-bone"
+                        >
+                          <InstagramIcon className="h-4 w-4 text-bone/60" />@{handle}
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           )}
           <LinkButton href={`#${SECTION_IDS.configurator}`} size="sm" arrow className="h-10">
             Orçamento
@@ -96,6 +134,21 @@ export function Navbar() {
                 <span className="font-mono text-[11px] text-bone/30">0{i + 1}</span>
               </a>
             ))}
+            {instagrams.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-2 border-t border-white/[0.07] px-2 pt-3">
+                {instagrams.map((handle) => (
+                  <a
+                    key={handle}
+                    href={`https://instagram.com/${handle}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="glass-pill flex items-center gap-2 rounded-full px-3 py-2 text-[13px] text-bone/85"
+                  >
+                    <InstagramIcon className="h-4 w-4" />@{handle}
+                  </a>
+                ))}
+              </div>
+            )}
             <LinkButton href={`#${SECTION_IDS.configurator}`} onClick={() => setOpen(false)} arrow className="mt-2 w-full">
               Montar orçamento
             </LinkButton>

@@ -415,9 +415,38 @@ export function SettingsPage() {
               <Field label="WhatsApp" hint="Com DDI e DDD, só números. Ex.: 5511999999999">
                 <TextInput disabled={ro} inputMode="tel" value={draft.contact.whatsapp} onChange={(e) => update('contact', { whatsapp: e.target.value })} />
               </Field>
-              <Field label="Instagram" hint="Apenas o @usuário, sem o link.">
-                <TextInput disabled={ro} value={draft.contact.instagram} onChange={(e) => update('contact', { instagram: e.target.value })} />
-              </Field>
+              <div>
+                <p className="mb-2 font-mono text-[10.5px] uppercase tracking-[0.18em] text-mist">Instagram</p>
+                <div className="space-y-2">
+                  {draft.contact.instagrams.map((handle, i) => (
+                    <div key={i} className="flex gap-2">
+                      <TextInput
+                        disabled={ro}
+                        aria-label={`Instagram ${i + 1}`}
+                        value={handle}
+                        placeholder="usuario"
+                        onChange={(e) => update('contact', { instagrams: draft.contact.instagrams.map((h, j) => (j === i ? e.target.value : h)) })}
+                      />
+                      {!ro && (
+                        <button
+                          type="button"
+                          onClick={() => update('contact', { instagrams: draft.contact.instagrams.filter((_, j) => j !== i) })}
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-bone/50 hover:bg-red-400/10 hover:text-red-300"
+                          aria-label="Remover perfil"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  {!ro && draft.contact.instagrams.length < 6 && (
+                    <Button size="sm" variant="glass" icon={<Plus className="h-4 w-4" />} onClick={() => update('contact', { instagrams: [...draft.contact.instagrams, ''] })}>
+                      Adicionar perfil
+                    </Button>
+                  )}
+                </div>
+                <p className="mt-1.5 text-[12px] text-fog">Apenas o @usuário, sem o link. Aparecem no menu e no rodapé.</p>
+              </div>
               <Field label="E-mail">
                 <TextInput disabled={ro} type="email" value={draft.contact.email} onChange={(e) => update('contact', { email: e.target.value })} />
               </Field>

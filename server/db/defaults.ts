@@ -183,7 +183,7 @@ export const defaultSettings: SiteSettings = {
   },
   contact: {
     whatsapp: '5511999999999',
-    instagram: 'noirstudio',
+    instagrams: ['gabrielvinisantos', 'danielemochii'],
     email: 'contato@noirstudio.com.br',
     city: 'São Paulo — Brasil',
     whatsappIntro: 'Olá! Gostaria de solicitar um orçamento personalizado.',

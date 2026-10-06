@@ -191,7 +191,8 @@ export interface SiteSettings {
   };
   contact: {
     whatsapp: string;
-    instagram: string;
+    /** Perfis do Instagram do estúdio (sem @). */
+    instagrams: string[];
     email: string;
     city: string;
     whatsappIntro: string;

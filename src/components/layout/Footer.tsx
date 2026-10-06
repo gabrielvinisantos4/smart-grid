@@ -12,7 +12,7 @@ export function Footer() {
   const whatsappDigits = contact.whatsapp.replace(/\D/g, '');
 
   const contacts = [
-    contact.instagram && { icon: InstagramIcon, label: `@${contact.instagram}`, href: `https://instagram.com/${contact.instagram}` },
+    ...contact.instagrams.map((handle) => ({ icon: InstagramIcon, label: `@${handle}`, href: `https://instagram.com/${handle}` })),
     whatsappDigits && { icon: WhatsAppIcon, label: 'WhatsApp', href: `https://wa.me/${whatsappDigits}` },
     contact.email && { icon: Mail, label: contact.email, href: `mailto:${contact.email}` },
   ].filter(Boolean) as { icon: typeof Mail; label: string; href: string }[];

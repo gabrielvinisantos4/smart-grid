@@ -24,7 +24,12 @@ export function createSettingsRepo(db: Database) {
     get(): SiteSettings {
       const row = db.prepare('SELECT value FROM settings WHERE key = ?').get(KEY) as { value: string } | undefined;
       if (!row) return structuredClone(defaultSettings);
-      return mergeDefaults(defaultSettings, JSON.parse(row.value));
+      const stored = JSON.parse(row.value);
+      // Compatibilidade: versões anteriores guardavam um único perfil em contact.instagram.
+      if (typeof stored?.contact?.instagram === 'string' && !Array.isArray(stored.contact.instagrams)) {
+        stored.contact.instagrams = stored.contact.instagram ? [stored.contact.instagram] : [];
+      }
+      return mergeDefaults(defaultSettings, stored);
     },
 
     save(input: unknown): SiteSettings {
