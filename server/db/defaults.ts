@@ -16,6 +16,11 @@ export interface SeedMedia {
   creditUrl: string;
 }
 
+/** Imagens que acompanham o projeto (prints reais), copiadas para os uploads no primeiro boot. */
+export const seedLocalMedia: { id: string; file: string; alt: string }[] = [
+  { id: 'm-result-tresrios', file: 'resultado-tresriosacabamentos.jpg', alt: 'Reel da Três Rios Acabamentos: Mega Feirão' },
+];
+
 const credit = (name: string, user: string) => ({
   credit: `${name} / Unsplash`,
   creditUrl: `https://unsplash.com/@${user}?utm_source=studio&utm_medium=referral`,
@@ -142,14 +147,15 @@ export const defaultSettings: SiteSettings = {
     eyebrow: 'Resultados',
     title: 'Conteúdo que *para o scroll.*',
     text: 'Pessoas e marcas reais que confiaram no nosso roteiro, captação e edição, e os números que cada vídeo alcançou.',
-    highlightValue: '+349 mil',
-    highlightLabel: 'visualizações orgânicas em apenas cinco conteúdos',
+    highlightValue: '+397 mil',
+    highlightLabel: 'visualizações orgânicas em apenas seis conteúdos',
     items: [
-      { id: 'r1', mediaId: 'm-reel-1', views: '120 mil', caption: '', client: '', handle: '', niche: 'Lifestyle', url: '' },
-      { id: 'r2', mediaId: 'm-reel-2', views: '85 mil', caption: '', client: '', handle: '', niche: 'Saúde feminina', url: '' },
-      { id: 'r3', mediaId: 'm-reel-3', views: '78,4 mil', caption: '', client: '', handle: '', niche: 'Saúde feminina', url: '' },
-      { id: 'r4', mediaId: 'm-reel-4', views: '54,8 mil', caption: '', client: '', handle: '', niche: 'Automotivo', url: '' },
-      { id: 'r5', mediaId: 'm-phone-capture', views: '11,1 mil', caption: '', client: '', handle: '', niche: 'Varejo', url: '' },
+      { id: 'r1', mediaId: 'm-reel-1', views: '120 mil', caption: '', client: '', handle: 'daniellemelloa', niche: 'Lifestyle', url: '' },
+      { id: 'r2', mediaId: 'm-reel-2', views: '85 mil', caption: '', client: '', handle: 'dra.rafalavalle', niche: 'Saúde feminina', url: '' },
+      { id: 'r3', mediaId: 'm-reel-3', views: '78,4 mil', caption: '', client: '', handle: 'dra.rafalavalle', niche: 'Saúde feminina', url: '' },
+      { id: 'r4', mediaId: 'm-reel-4', views: '54,8 mil', caption: '', client: '', handle: 'branco.garage', niche: 'Automotivo', url: '' },
+      { id: 'r6', mediaId: 'm-result-tresrios', views: '48,6 mil', caption: '', client: 'Três Rios Acabamentos', handle: 'tresriosacabamentos', niche: 'Revestimentos', url: '' },
+      { id: 'r5', mediaId: 'm-phone-capture', views: '11,1 mil', caption: '', client: '', handle: 'panificadoravalerio', niche: 'Panificadora', url: '' },
     ],
   },
   gallery: {

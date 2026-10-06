@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { ArrowUpRight, Eye, Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { ResultItem } from '@shared/types';
@@ -36,10 +37,13 @@ export function Results() {
         )}
       </div>
 
-      <div className="no-scrollbar relative mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:px-8 lg:mx-auto lg:grid lg:max-w-[1400px] lg:grid-cols-5 lg:overflow-visible">
+      <div
+        style={{ '--cols': Math.min(results.items.length, 6) } as CSSProperties}
+        className="no-scrollbar relative mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:px-8 lg:mx-auto lg:grid lg:max-w-[1400px] lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))] lg:overflow-visible"
+      >
         {results.items.map((item, i) => {
           const link = profileUrl(item);
-          const name = item.client || item.niche;
+          const name = item.client || (item.handle ? `@${item.handle}` : item.niche);
           const Wrapper = link ? 'a' : 'div';
           return (
             <motion.figure
@@ -52,7 +56,7 @@ export function Results() {
             >
               <Wrapper
                 {...(link ? { href: link, target: '_blank', rel: 'noreferrer', 'aria-label': `Ver ${name} no Instagram` } : {})}
-                className="group relative block aspect-[9/16] overflow-hidden rounded-[22px] border border-white/[0.08] bg-ink-100 shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9)]"
+                className="group relative block aspect-[9/14] overflow-hidden rounded-[22px] border border-white/[0.08] bg-ink-100 shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9)]"
               >
                 {/* O print aparece como foi publicado, sem filtro P&B. */}
                 <SmartImage
@@ -81,7 +85,7 @@ export function Results() {
                 </span>
                 <span className="min-w-0 flex-1">
                   {name && <span className="block truncate text-[14.5px] font-medium tracking-[-0.01em] text-bone">{name}</span>}
-                  {item.handle ? (
+                  {item.handle && item.client ? (
                     link ? (
                       <a href={link} target="_blank" rel="noreferrer" className="group/handle inline-flex items-center gap-1 truncate text-[12.5px] text-mist transition hover:text-bone">
                         @{item.handle}
@@ -91,11 +95,11 @@ export function Results() {
                       <span className="block truncate text-[12.5px] text-mist">@{item.handle}</span>
                     )
                   ) : (
-                    item.client && item.niche && <span className="block truncate text-[12.5px] text-mist">{item.niche}</span>
+                    item.niche && name !== item.niche && <span className="block truncate text-[12.5px] text-mist">{item.niche}</span>
                   )}
-                  <span className="mt-1.5 flex items-center gap-1.5 font-mono text-[11px] tabular-nums tracking-[0.04em] text-bone/70">
-                    <Eye className="h-3.5 w-3.5" />
-                    {item.views} visualizações
+                  <span className="mt-1.5 flex items-center gap-1.5 whitespace-nowrap font-mono text-[11px] tabular-nums tracking-[0.04em] text-bone/70" aria-label={`${item.views} visualizações`}>
+                    <Eye className="h-3.5 w-3.5 shrink-0" />
+                    {item.views}
                   </span>
                 </span>
               </figcaption>

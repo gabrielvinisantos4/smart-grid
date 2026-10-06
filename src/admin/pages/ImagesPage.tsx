@@ -327,7 +327,7 @@ function ResultsEditor({
         {items.map((item, i) => (
           <div key={item.id} className="glass rounded-[22px] p-3">
             <div className="grid grid-cols-[110px_1fr] gap-3">
-              <MediaSlot label="Print do vídeo" aspect="aspect-[9/16]" allowClear={false} disabled={readOnly} media={media.get(item.mediaId)} onChange={(id) => id && patch(item.id, { mediaId: id })} />
+              <MediaSlot label="Print do vídeo" aspect="aspect-[9/14]" allowClear={false} disabled={readOnly} media={media.get(item.mediaId)} onChange={(id) => id && patch(item.id, { mediaId: id })} />
               <div className="space-y-3">
                 <Field label="Nome da pessoa / marca">
                   <TextInput disabled={readOnly} value={item.client} maxLength={60} placeholder="Dra. Ana Souza" onChange={(e) => patch(item.id, { client: e.target.value })} className="h-10" />

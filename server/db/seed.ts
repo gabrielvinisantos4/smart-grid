@@ -1,7 +1,9 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import type { AppContext } from '../context.ts';
 import { config } from '../config.ts';
 import { generatePassword } from '../auth/password.ts';
-import { defaultSettings, seedMedia, seedServices } from './defaults.ts';
+import { defaultSettings, seedLocalMedia, seedMedia, seedServices } from './defaults.ts';
 import { transaction } from './database.ts';
 import { serviceInputSchema } from '../services/schemas.ts';
 
@@ -11,6 +13,10 @@ export async function seed(ctx: AppContext, options: { silent?: boolean } = {}) 
   const hasContent = ctx.db.prepare('SELECT 1 FROM settings LIMIT 1').get();
 
   if (!hasContent) {
+    for (const media of seedLocalMedia) {
+      const buffer = await fs.readFile(path.resolve('server/db/seed-assets', media.file));
+      await ctx.media.upload(buffer, media.alt, media.id);
+    }
     transaction(ctx.db, () => {
       for (const media of seedMedia) ctx.media.insertRemote(media);
       for (const { id, ...service } of seedServices) ctx.services.create(serviceInputSchema.parse({ ...service, active: true }), id);

@@ -117,9 +117,8 @@ export function createMediaRepo(db: Database, settingsRepo: SettingsRepo) {
       return this.get(id)!;
     },
 
-    async upload(buffer: Buffer, alt: string): Promise<MediaAsset> {
+    async upload(buffer: Buffer, alt: string, id: string = randomUUID()): Promise<MediaAsset> {
       const { fileName, url } = await writeUpload(buffer);
-      const id = randomUUID();
       db.prepare('INSERT INTO media (id, url, file_name, alt, source) VALUES (?, ?, ?, ?, ?)').run(id, url, fileName, alt, 'upload');
       return this.get(id)!;
     },
