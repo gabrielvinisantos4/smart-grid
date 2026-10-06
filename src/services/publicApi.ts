@@ -22,7 +22,7 @@ async function demoQuote(input: QuoteRequestInput): Promise<QuoteRequestResult> 
   return {
     quote: {
       id: 0,
-      code: 'DEMONSTRAÇÃO',
+      code: '',
       lines,
       totalCents,
       clientName: input.clientName ?? null,
