@@ -44,20 +44,24 @@ npm run typecheck
 ## Fluxo do cliente
 
 1. Hero → conhece o estúdio → resultados (Reels com visualizações)
-2. **Monte seu conteúdo**: escolhe Vídeo / Carrossel / Audiovisual (ou outros serviços criados no painel)
-3. Define a quantidade por mês (atalhos, `− 04 +` ou digitação manual) e pode combinar vários formatos
-4. O investimento mensal é recalculado em tempo real (no celular, numa barra fixa inferior)
+2. **Monte seu plano**: escolhe um plano mensal de preço fixo (4, 8 ou 12 vídeos por mês)
+3. Se quiser, adiciona avulsos (carrossel com 3 ajustes, vídeo avulso, vídeo institucional) e define a quantidade (atalhos, `− 04 +` ou digitação manual)
+4. O investimento é recalculado em tempo real, separando o valor mensal do plano e o dos avulsos (no celular, numa barra fixa inferior)
 5. **Solicitar orçamento** (com nome/contato opcionais) ou **Enviar pelo WhatsApp**
 6. O pedido é registrado no painel e o WhatsApp abre com a mensagem pronta:
 
 ```
 Olá! Gostaria de solicitar um orçamento personalizado.
 
-Vídeo: 8 unidades
-Carrossel: 4 unidades
-Conteúdo Audiovisual: 2 produções
+Plano mensal: 8 vídeos por mês (R$ 1.200,00/mês)
 
-Investimento estimado: R$ 2.600,00
+Avulsos:
+Carrossel: 2 carrosséis
+Vídeo institucional: 1 vídeo
+
+Plano: R$ 1.200,00/mês
+Avulsos: R$ 680,00
+Investimento estimado: R$ 1.880,00
 
 Ref.: ORC-0007
 ```
@@ -67,7 +71,7 @@ Ref.: ORC-0007
 | Seção | O que faz |
 |---|---|
 | **Dashboard** | Orçamentos no mês, valor estimado, ticket médio, gráfico de 30 dias, formatos mais pedidos |
-| **Serviços** | Criar, editar, excluir, ativar/desativar e reordenar. Nome, descrição, preço, ícone, imagem, qtd. mín./máx./padrão, atalhos, unidade, selo |
+| **Serviços** | Criar, editar, excluir, ativar/desativar e reordenar. Tipo (plano mensal de preço fixo ou avulso por unidade), nome, descrição, itens inclusos, preço, ícone, imagem, qtd. mín./máx./padrão, atalhos, unidade, selo |
 | **Preços** | Edição rápida dos preços com prévia. Ao salvar, o site público já usa o novo valor |
 | **Imagens** | Biblioteca (upload múltiplo, arrastar e soltar, substituir mantendo as referências, excluir, adicionar por URL), imagem de cada seção, galeria editorial e vitrine de Resultados |
 | **Configurações** | Nome, logo, cor de destaque, todos os textos (título, subtítulo, CTA…), SEO, WhatsApp, Instagram, e-mail, mensagem automática, senha e equipe |

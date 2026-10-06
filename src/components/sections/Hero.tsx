@@ -78,7 +78,10 @@ export function Hero() {
   if (!data) return <section className="h-[100svh] min-h-[640px] bg-ink" />;
   const { hero } = data.settings;
   const services = data.services;
-  const minPrice = services.length ? Math.min(...services.map((s) => s.priceCents)) : null;
+  // Mostra o plano mensal mais acessível; sem planos, o avulso mais barato.
+  const plans = services.filter((s) => s.kind === 'plan');
+  const priced = plans.length ? plans : services;
+  const minPrice = priced.length ? Math.min(...priced.map((s) => s.priceCents)) : null;
 
   // Quebra o título em linhas após cada ponto final (ou em quebras de linha explícitas).
   const split = hero.title.includes('\n') ? hero.title.split('\n') : hero.title.split(/(?<=\.\*?)\s+/);
@@ -218,14 +221,14 @@ export function Hero() {
                     ))}
                   </span>
                 </div>
-                <p className="mt-6 text-sm text-mist">Conteúdos a partir de</p>
+                <p className="mt-6 text-sm text-mist">{plans.length ? 'Planos mensais a partir de' : 'Conteúdos a partir de'}</p>
                 <p className="mt-1 text-4xl font-medium tracking-[-0.04em] text-bone">
                   {formatBRL(minPrice)}
-                  <span className="ml-1 text-sm font-normal tracking-normal text-mist">/unidade</span>
+                  <span className="ml-1 text-sm font-normal tracking-normal text-mist">{plans.length ? '/mês' : '/unidade'}</span>
                 </p>
                 <div className="hairline my-5" />
                 <p className="flex items-center justify-between text-[13px] text-bone/80">
-                  Calcule em tempo real
+                  Gravação profissional com celular
                   <ArrowDown className="h-4 w-4 transition-transform duration-500 group-hover:translate-y-0.5" />
                 </p>
               </a>

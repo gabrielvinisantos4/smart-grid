@@ -14,6 +14,7 @@ interface Props {
   lines: QuoteLine[];
   totalCents: number;
   totalUnits: number;
+  totals: { monthlyCents: number; oneOffCents: number };
   busy: boolean;
   onRequest: () => void;
   onWhatsApp: () => void;
@@ -22,7 +23,7 @@ interface Props {
   compact?: boolean;
 }
 
-export function QuoteSummary({ texts, lines, totalCents, totalUnits, busy, onRequest, onWhatsApp, className, compact }: Props) {
+export function QuoteSummary({ texts, lines, totalCents, totalUnits, totals, busy, onRequest, onWhatsApp, className, compact }: Props) {
   const empty = lines.length === 0;
 
   return (
@@ -65,12 +66,16 @@ export function QuoteSummary({ texts, lines, totalCents, totalUnits, busy, onReq
                   className="flex items-start justify-between gap-4 border-b border-white/[0.07] py-4 first:pt-0"
                 >
                   <div className="min-w-0">
+                    {line.kind === 'plan' && <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">Plano mensal</p>}
                     <p className="truncate text-[15px] text-bone">{line.name}</p>
                     <p className="mt-0.5 font-mono text-[11px] tabular-nums text-fog">
-                      {String(line.quantity).padStart(2, '0')} {unitLabel(line)} · {formatBRL(line.unitPriceCents)}
+                      {line.kind === 'plan' ? 'Valor fixo por mês' : `${String(line.quantity).padStart(2, '0')} ${unitLabel(line)} · ${formatBRL(line.unitPriceCents)}`}
                     </p>
                   </div>
-                  <AnimatedPrice cents={line.subtotalCents} className="shrink-0 text-[15px] text-bone/90" />
+                  <span className="shrink-0 text-right">
+                    <AnimatedPrice cents={line.subtotalCents} className="text-[15px] text-bone/90" />
+                    {line.kind === 'plan' && <span className="block font-mono text-[10px] text-fog">/mês</span>}
+                  </span>
                 </motion.div>
               ))
             )}
@@ -80,13 +85,17 @@ export function QuoteSummary({ texts, lines, totalCents, totalUnits, busy, onReq
         <div className="mt-6 rounded-[22px] border border-white/[0.07] bg-black/25 p-5">
           <p className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-mist">{texts.totalLabel}</p>
           <AnimatedPrice split cents={totalCents} className="mt-2 block text-[2.6rem] font-medium leading-none tracking-[-0.05em] text-bone" />
-          <p className="mt-3 h-4 font-mono text-[11px] tabular-nums text-fog">
-            {totalUnits > 0 && (
+          <p className="mt-3 min-h-4 font-mono text-[11px] tabular-nums leading-relaxed text-fog">
+            {totals.monthlyCents > 0 && totals.oneOffCents > 0 ? (
               <>
-                {totalUnits} {totalUnits === 1 ? 'conteúdo' : 'conteúdos'} / mês
-                {totalUnits > 1 && <> · média {formatBRL(Math.round(totalCents / totalUnits))}</>}
+                {formatBRL(totals.monthlyCents)}/mês do plano
+                <br />+ {formatBRL(totals.oneOffCents)} em avulsos
               </>
-            )}
+            ) : totals.monthlyCents > 0 ? (
+              'Plano mensal, valor fixo'
+            ) : totalUnits > 0 ? (
+              `${totalUnits} ${totalUnits === 1 ? 'conteúdo avulso' : 'conteúdos avulsos'}`
+            ) : null}
           </p>
         </div>
 

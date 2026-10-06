@@ -1,13 +1,11 @@
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
-const STEPS = ['Formato', 'Quantidade', 'Investimento'];
-
 /** Progresso do fluxo: 0 = nada escolhido, 3 = pronto para enviar. */
-export function StepIndicator({ progress }: { progress: number }) {
+export function StepIndicator({ progress, labels }: { progress: number; labels: string[] }) {
   return (
     <ol className="flex items-center gap-2 sm:gap-3" aria-label="Etapas do orçamento">
-      {STEPS.map((label, i) => {
+      {labels.map((label, i) => {
         const done = progress > i + 1 || (progress === 3 && i === 2);
         const active = progress === i + 1 || (progress === 0 && i === 0);
         return (
@@ -30,7 +28,7 @@ export function StepIndicator({ progress }: { progress: number }) {
               </span>
               <span className="hidden font-mono text-[10.5px] uppercase tracking-[0.18em] sm:inline">{label}</span>
             </span>
-            {i < STEPS.length - 1 && (
+            {i < labels.length - 1 && (
               <span className="relative h-px w-5 overflow-hidden bg-white/10 sm:w-10">
                 <span
                   className="absolute inset-0 origin-left bg-bone/60 transition-transform duration-700 ease-[var(--ease-cine)]"

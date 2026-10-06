@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { WhatsAppIcon } from '@/components/ui/SocialIcons';
 import { formatBRL } from '@/lib/format';
 import type { ClientInfo } from '@/hooks/useQuoteSubmit';
+import { IS_DEMO } from '@/config/site';
 
 interface Props {
   open: boolean;
@@ -46,7 +47,9 @@ export function RequestModal({ open, onClose, lines, totalCents, busy, error, on
           <p className="eyebrow mt-6">{done.quote.code}</p>
           <h3 className="mt-3 text-3xl font-medium tracking-[-0.04em]">Orçamento enviado.</h3>
           <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-mist">
-            Abrimos o WhatsApp com o seu plano preenchido. Se a janela não abriu, use o botão abaixo.
+            {IS_DEMO
+              ? 'Toque no botão abaixo para abrir o WhatsApp com o seu plano preenchido.'
+              : 'Abrimos o WhatsApp com o seu plano preenchido. Se a janela não abriu, use o botão abaixo.'}
           </p>
           <div className="mt-8 grid gap-2.5">
             {done.whatsappUrl && (
@@ -74,13 +77,16 @@ export function RequestModal({ open, onClose, lines, totalCents, busy, error, on
             {lines.map((l) => (
               <div key={l.serviceId} className="flex justify-between py-1 text-[13px]">
                 <span className="text-bone/80">
-                  {l.name} <span className="text-fog">· {l.quantity} {unitLabel(l)}</span>
+                  {l.name} <span className="text-fog">· {l.kind === 'plan' ? 'plano mensal' : `${l.quantity} ${unitLabel(l)}`}</span>
                 </span>
-                <span className="tabular-nums text-bone/80">{formatBRL(l.subtotalCents)}</span>
+                <span className="tabular-nums text-bone/80">
+                  {formatBRL(l.subtotalCents)}
+                  {l.kind === 'plan' && '/mês'}
+                </span>
               </div>
             ))}
             <div className="mt-2 flex justify-between border-t border-white/[0.07] pt-3 text-[15px] font-medium">
-              <span>Total mensal</span>
+              <span>Total</span>
               <span className="tabular-nums">{formatBRL(totalCents)}</span>
             </div>
           </div>

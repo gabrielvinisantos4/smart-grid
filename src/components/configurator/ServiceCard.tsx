@@ -78,6 +78,15 @@ export function ServiceCard({ service, image, index, quantity, selected, onToggl
           <div className="flex flex-1 flex-col px-3 pb-3 pt-4 sm:px-5 sm:pt-5 xl:px-3 xl:pt-4">
             <h3 className="text-xl font-medium tracking-[-0.03em] text-bone">{service.name}</h3>
             <p className="mt-2 text-[14px] leading-relaxed text-mist">{service.description}</p>
+            {service.features.length > 0 && (
+              <ul className="mt-3 flex flex-wrap gap-1.5">
+                {service.features.map((f) => (
+                  <li key={f} className="rounded-full border border-white/10 px-2.5 py-1 text-[11.5px] text-bone/75">
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            )}
             <div className="mt-auto flex items-baseline gap-1.5 pt-5">
               <span className="text-2xl font-medium tracking-[-0.04em] text-bone">{formatBRL(service.priceCents)}</span>
               <span className="text-[13px] text-fog">/ {service.unitSingular}</span>
@@ -97,7 +106,7 @@ export function ServiceCard({ service, image, index, quantity, selected, onToggl
                 transition={{ duration: 0.3 }}
                 className="flex w-full items-center justify-between"
               >
-                <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bone/60">Por mês</span>
+                <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bone/60">Quantidade</span>
                 <QuantityStepper size="sm" value={quantity} min={service.minQty} max={service.maxQty} onChange={onQuantity} label={service.name} />
               </motion.div>
             ) : (

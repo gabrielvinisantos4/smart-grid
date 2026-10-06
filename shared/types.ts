@@ -50,8 +50,21 @@ export interface AdminMediaAsset extends MediaAsset {
 /* Serviços                                                                   */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Tipo de serviço:
+ * - "plan": plano mensal de preço fixo (o cliente escolhe no máximo um);
+ * - "unit": conteúdo avulso cobrado por unidade.
+ */
+export type ServiceKind = 'plan' | 'unit';
+
+export const SERVICE_KIND_LABELS: Record<ServiceKind, string> = {
+  plan: 'Plano mensal',
+  unit: 'Avulso',
+};
+
 export interface Service {
   id: string;
+  kind: ServiceKind;
   name: string;
   description: string;
   icon: string;
@@ -64,6 +77,8 @@ export interface Service {
   unitSingular: string;
   unitPlural: string;
   badge: string | null;
+  /** Itens inclusos exibidos no card (ex.: "3 ajustes inclusos"). */
+  features: string[];
   active: boolean;
   sortOrder: number;
   createdAt: string;
@@ -74,6 +89,7 @@ export interface Service {
 export type PublicService = Pick<
   Service,
   | 'id'
+  | 'kind'
   | 'name'
   | 'description'
   | 'icon'
@@ -86,6 +102,7 @@ export type PublicService = Pick<
   | 'unitSingular'
   | 'unitPlural'
   | 'badge'
+  | 'features'
 >;
 
 /* -------------------------------------------------------------------------- */
@@ -159,6 +176,9 @@ export interface SiteSettings {
     eyebrow: string;
     title: string;
     text: string;
+    /** Frase de destaque exibida no topo do configurador. */
+    highlight: string;
+    stepPlanLabel: string;
     stepTypeLabel: string;
     quantityQuestion: string;
     summaryTitle: string;
@@ -232,6 +252,8 @@ export interface QuoteItemInput {
 
 export interface QuoteLine {
   serviceId: string;
+  /** Ausente em orçamentos antigos (equivale a "unit"). */
+  kind?: ServiceKind;
   name: string;
   unitPriceCents: number;
   quantity: number;

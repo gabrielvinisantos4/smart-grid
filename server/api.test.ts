@@ -56,8 +56,11 @@ describe('API pública', () => {
   test('entrega serviços ativos com preços do banco', async () => {
     const res = await call('GET', '/api/public/site');
     assert.equal(res.status, 200);
-    const video = res.body.services.find((s: { id: string }) => s.id === 'video');
-    assert.equal(video.priceCents, 15000);
+    const video = res.body.services.find((s: { id: string }) => s.id === 'video-avulso');
+    assert.equal(video.priceCents, 25000);
+    const plan = res.body.services.find((s: { id: string }) => s.id === 'plano-8');
+    assert.equal(plan.kind, 'plan');
+    assert.equal(plan.priceCents, 120000);
     assert.ok(!('active' in video), 'metadados administrativos não vazam');
   });
 
@@ -66,28 +69,48 @@ describe('API pública', () => {
       body: {
         channel: 'whatsapp',
         items: [
-          { serviceId: 'video', quantity: 8, priceCents: 1 },
+          { serviceId: 'video-avulso', quantity: 8, priceCents: 1 },
           { serviceId: 'carrossel', quantity: 4 },
-          { serviceId: 'audiovisual', quantity: 2 },
+          { serviceId: 'video-institucional', quantity: 2 },
         ],
         totalCents: 1,
       },
     });
     assert.equal(res.status, 201);
-    assert.equal(res.body.quote.totalCents, 8 * 15000 + 4 * 10000 + 2 * 50000);
+    assert.equal(res.body.quote.totalCents, 8 * 25000 + 4 * 14000 + 2 * 40000);
     assert.match(res.body.whatsappUrl, /^https:\/\/wa\.me\/\d+\?text=/);
   });
 
   test('quantidade fora dos limites é ajustada ao máximo do serviço', async () => {
-    const res = await call('POST', '/api/public/quotes', { body: { channel: 'request', items: [{ serviceId: 'audiovisual', quantity: 999 }] } });
+    const res = await call('POST', '/api/public/quotes', { body: { channel: 'request', items: [{ serviceId: 'video-institucional', quantity: 999 }] } });
     assert.equal(res.body.quote.lines[0].quantity, 20);
+  });
+
+  test('plano mensal tem preço fixo e só um plano entra no orçamento', async () => {
+    const res = await call('POST', '/api/public/quotes', {
+      body: {
+        channel: 'whatsapp',
+        items: [
+          { serviceId: 'plano-8', quantity: 5 },
+          { serviceId: 'plano-12', quantity: 1 },
+          { serviceId: 'carrossel', quantity: 2 },
+        ],
+      },
+    });
+    assert.equal(res.status, 201);
+    const { lines, totalCents } = res.body.quote;
+    assert.deepEqual(lines.map((l: { serviceId: string; quantity: number }) => [l.serviceId, l.quantity]), [['plano-8', 1], ['carrossel', 2]]);
+    assert.equal(totalCents, 120000 + 2 * 14000);
+    const message = decodeURIComponent(res.body.whatsappUrl.split('text=')[1]);
+    assert.match(message, /Plano mensal: 8 vídeos por mês \(R\$ 1\.200,00\/mês\)/);
+    assert.match(message, /Carrossel: 2 carrosséis/);
   });
 });
 
 describe('Autenticação e permissões', () => {
   test('rotas admin exigem login', async () => {
     assert.equal((await call('GET', '/api/admin/services')).status, 401);
-    assert.equal((await call('PUT', '/api/admin/prices', { body: { prices: [{ id: 'video', priceCents: 1 }] } })).status, 401);
+    assert.equal((await call('PUT', '/api/admin/prices', { body: { prices: [{ id: 'video-avulso', priceCents: 1 }] } })).status, 401);
   });
 
   test('senha incorreta é rejeitada', async () => {
@@ -105,17 +128,17 @@ describe('Autenticação e permissões', () => {
   test('usuário viewer pode ler mas não alterar preços', async () => {
     const cookie = await login('viewer@test.dev', 'viewer-password-123');
     assert.equal((await call('GET', '/api/admin/services', { cookie })).status, 200);
-    const res = await call('PUT', '/api/admin/prices', { cookie, body: { prices: [{ id: 'video', priceCents: 1 }] } });
+    const res = await call('PUT', '/api/admin/prices', { cookie, body: { prices: [{ id: 'video-avulso', priceCents: 1 }] } });
     assert.equal(res.status, 403);
     assert.equal((await call('PUT', '/api/admin/settings', { cookie, body: {} })).status, 403);
   });
 
   test('owner altera preço e o configurador público reflete na hora', async () => {
     const cookie = await login('owner@test.dev', 'owner-password-123');
-    const res = await call('PUT', '/api/admin/prices', { cookie, body: { prices: [{ id: 'video', priceCents: 18000 }] } });
+    const res = await call('PUT', '/api/admin/prices', { cookie, body: { prices: [{ id: 'video-avulso', priceCents: 27000 }] } });
     assert.equal(res.status, 200);
     const site = await call('GET', '/api/public/site');
-    assert.equal(site.body.services.find((s: { id: string }) => s.id === 'video').priceCents, 18000);
+    assert.equal(site.body.services.find((s: { id: string }) => s.id === 'video-avulso').priceCents, 27000);
   });
 
   test('requisições de outra origem são bloqueadas (CSRF)', async () => {
@@ -123,7 +146,7 @@ describe('Autenticação e permissões', () => {
     const res = await call('PUT', '/api/admin/prices', {
       cookie,
       origin: 'https://site-malicioso.com',
-      body: { prices: [{ id: 'video', priceCents: 1 }] },
+      body: { prices: [{ id: 'video-avulso', priceCents: 1 }] },
     });
     assert.equal(res.status, 403);
   });

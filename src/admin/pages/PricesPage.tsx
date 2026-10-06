@@ -81,7 +81,7 @@ export function PricesPage() {
                       <p className="text-[15px]">
                         {service.name} {!service.active && <span className="text-[12px] text-fog">(inativo)</span>}
                       </p>
-                      <p className="font-mono text-[11px] text-fog">por {service.unitSingular}</p>
+                      <p className="font-mono text-[11px] text-fog">{service.kind === 'plan' ? 'plano mensal · por mês' : `avulso · por ${service.unitSingular}`}</p>
                     </div>
                   </div>
                   <label className={cn('flex h-14 items-center rounded-2xl border bg-white/[0.035] pl-4 transition focus-within:border-white/35', parsed === null ? 'border-red-300/40' : changed ? 'border-amber-300/40' : 'border-white/10')}>
@@ -100,13 +100,15 @@ export function PricesPage() {
                     {changed && parsed !== null ? (
                       <>
                         <span className="line-through">{formatBRL(service.priceCents)}</span> → <span className="text-amber-200">{formatBRL(parsed)}</span>
-                        <br />
-                        {service.defaultQty} un./mês = {formatBRL(parsed * service.defaultQty)}
+                        {service.kind !== 'plan' && (
+                          <>
+                            <br />
+                            {service.defaultQty} un. = {formatBRL(parsed * service.defaultQty)}
+                          </>
+                        )}
                       </>
                     ) : (
-                      <>
-                        {service.defaultQty} un./mês = {formatBRL(service.priceCents * service.defaultQty)}
-                      </>
+                      <>{service.kind === 'plan' ? `${formatBRL(service.priceCents)} por mês` : `${service.defaultQty} un. = ${formatBRL(service.priceCents * service.defaultQty)}`}</>
                     )}
                   </div>
                 </div>

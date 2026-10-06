@@ -6,18 +6,20 @@ const mediaRef = z.string().trim().max(64).nullable();
 
 export const serviceInputSchema = z
   .object({
+    kind: z.enum(['plan', 'unit']).default('unit'),
     name: text(80).min(1, 'Informe o nome.'),
     description: text(400).default(''),
     icon: z.enum(ICON_NAMES),
     imageId: mediaRef.default(null),
     priceCents: z.number().int().min(0).max(100_000_000),
-    minQty: z.number().int().min(1).max(999),
-    maxQty: z.number().int().min(1).max(999),
-    defaultQty: z.number().int().min(1).max(999),
+    minQty: z.number().int().min(1).max(999).default(1),
+    maxQty: z.number().int().min(1).max(999).default(30),
+    defaultQty: z.number().int().min(1).max(999).default(1),
     quickQuantities: z.array(z.number().int().min(1).max(999)).max(12).default([]),
     unitSingular: text(30).min(1).default('unidade'),
     unitPlural: text(30).min(1).default('unidades'),
     badge: text(30).nullable().default(null),
+    features: z.array(text(80)).max(8).default([]),
     active: z.boolean().default(true),
   })
   .refine((s) => s.maxQty >= s.minQty, { message: 'A quantidade máxima deve ser maior ou igual à mínima.', path: ['maxQty'] })
@@ -26,6 +28,9 @@ export const serviceInputSchema = z
     defaultQty: Math.min(s.maxQty, Math.max(s.minQty, s.defaultQty)),
     quickQuantities: [...new Set(s.quickQuantities)].filter((q) => q >= s.minQty && q <= s.maxQty).sort((a, b) => a - b),
     badge: s.badge ? s.badge : null,
+    features: s.features.filter(Boolean),
+    // Plano mensal tem preço fixo: quantidade é sempre 1.
+    ...(s.kind === 'plan' ? { minQty: 1, maxQty: 1, defaultQty: 1, quickQuantities: [] } : {}),
   }));
 
 export type ServiceInput = z.infer<typeof serviceInputSchema>;
@@ -69,6 +74,8 @@ export const siteSettingsSchema = z.object({
     eyebrow: text(60),
     title: text(120).min(1),
     text: text(300),
+    highlight: text(160),
+    stepPlanLabel: text(80),
     stepTypeLabel: text(80),
     quantityQuestion: text(120),
     summaryTitle: text(60),

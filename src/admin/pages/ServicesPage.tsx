@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowDown, ArrowUp, Clapperboard, Pencil, Plus, Trash2 } from 'lucide-react';
-import type { Service } from '@shared/types';
+import { SERVICE_KIND_LABELS, type Service } from '@shared/types';
 import { adminApi } from '@/services/adminApi';
 import { useAuth } from '@/hooks/useAuth';
 import { DynamicIcon } from '@/config/icons';
@@ -110,15 +110,18 @@ export function ServicesPage() {
                 <div className="flex flex-1 flex-col p-4">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-lg font-medium tracking-[-0.02em]">{service.name}</h3>
-                    <Badge tone={service.active ? 'positive' : 'muted'}>{service.active ? 'Ativo' : 'Inativo'}</Badge>
+                    <span className="flex shrink-0 gap-1.5">
+                      <Badge>{SERVICE_KIND_LABELS[service.kind]}</Badge>
+                      <Badge tone={service.active ? 'positive' : 'muted'}>{service.active ? 'Ativo' : 'Inativo'}</Badge>
+                    </span>
                   </div>
                   <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-mist">{service.description}</p>
                   <p className="mt-4 text-2xl font-medium tracking-[-0.04em]">
                     {formatBRL(service.priceCents)}
-                    <span className="ml-1 text-[13px] font-normal tracking-normal text-fog">/{service.unitSingular}</span>
+                    <span className="ml-1 text-[13px] font-normal tracking-normal text-fog">/{service.kind === 'plan' ? 'mês' : service.unitSingular}</span>
                   </p>
                   <p className="mt-1 font-mono text-[11px] text-fog">
-                    {service.minQty}–{service.maxQty} por mês · padrão {service.defaultQty}
+                    {service.kind === 'plan' ? 'Valor fixo mensal' : `${service.minQty}–${service.maxQty} unidades · padrão ${service.defaultQty}`}
                     {service.badge && ` · selo “${service.badge}”`}
                   </p>
                 </div>

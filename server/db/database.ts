@@ -81,6 +81,11 @@ const migrations: string[] = [
   );
   CREATE INDEX quotes_created_idx ON quotes(created_at);
   `,
+  // 2 — planos mensais (preço fixo) e itens inclusos por serviço
+  `
+  ALTER TABLE services ADD COLUMN kind TEXT NOT NULL DEFAULT 'unit' CHECK (kind IN ('plan', 'unit'));
+  ALTER TABLE services ADD COLUMN features TEXT NOT NULL DEFAULT '[]';
+  `,
 ];
 
 function migrate(db: DatabaseSync) {

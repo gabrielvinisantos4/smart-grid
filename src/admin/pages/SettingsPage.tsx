@@ -170,10 +170,16 @@ function TextsTab({ draft, update, ro }: { draft: SiteSettings; update: Update; 
         <Field label="Texto" className="md:col-span-2">
           <TextInput disabled={ro} value={cfg.text} onChange={(e) => update('configurator', { text: e.target.value })} />
         </Field>
-        <Field label="Etapa 01">
+        <Field label="Frase de destaque" hint="Aparece em um selo acima dos planos." className="md:col-span-2">
+          <TextInput disabled={ro} value={cfg.highlight} onChange={(e) => update('configurator', { highlight: e.target.value })} />
+        </Field>
+        <Field label="Etapa dos planos mensais">
+          <TextInput disabled={ro} value={cfg.stepPlanLabel} onChange={(e) => update('configurator', { stepPlanLabel: e.target.value })} />
+        </Field>
+        <Field label="Etapa dos avulsos">
           <TextInput disabled={ro} value={cfg.stepTypeLabel} onChange={(e) => update('configurator', { stepTypeLabel: e.target.value })} />
         </Field>
-        <Field label="Etapa 02 (pergunta)">
+        <Field label="Pergunta das quantidades">
           <TextInput disabled={ro} value={cfg.quantityQuestion} onChange={(e) => update('configurator', { quantityQuestion: e.target.value })} />
         </Field>
         <Field label="Título do resumo">

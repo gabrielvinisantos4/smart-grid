@@ -7,6 +7,8 @@ import { HttpError } from '../middleware/errors.ts';
 
 interface ServiceRow {
   id: string;
+  kind: 'plan' | 'unit';
+  features: string;
   name: string;
   description: string;
   icon: string;
@@ -28,6 +30,7 @@ interface ServiceRow {
 function toService(row: ServiceRow): Service {
   return {
     id: row.id,
+    kind: row.kind,
     name: row.name,
     description: row.description,
     icon: row.icon,
@@ -40,6 +43,7 @@ function toService(row: ServiceRow): Service {
     unitSingular: row.unit_singular,
     unitPlural: row.unit_plural,
     badge: row.badge,
+    features: JSON.parse(row.features) as string[],
     active: row.active === 1,
     sortOrder: row.sort_order,
     createdAt: row.created_at,
@@ -50,6 +54,7 @@ function toService(row: ServiceRow): Service {
 export function toPublicService(s: Service): PublicService {
   return {
     id: s.id,
+    kind: s.kind,
     name: s.name,
     description: s.description,
     icon: s.icon,
@@ -62,6 +67,7 @@ export function toPublicService(s: Service): PublicService {
     unitSingular: s.unitSingular,
     unitPlural: s.unitPlural,
     badge: s.badge,
+    features: s.features,
   };
 }
 
@@ -93,8 +99,8 @@ export function createServicesRepo(db: Database) {
       const { next } = db.prepare('SELECT COALESCE(MAX(sort_order), -1) + 1 AS next FROM services').get() as { next: number };
       db.prepare(
         `INSERT INTO services (id, name, description, icon, image_id, price_cents, min_qty, max_qty, default_qty,
-                               quick_quantities, unit_singular, unit_plural, badge, active, sort_order)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                               quick_quantities, unit_singular, unit_plural, badge, active, sort_order, kind, features)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       ).run(
         id,
         input.name,
@@ -111,6 +117,8 @@ export function createServicesRepo(db: Database) {
         input.badge,
         input.active ? 1 : 0,
         next,
+        input.kind,
+        JSON.stringify(input.features),
       );
       return this.get(id)!;
     },
@@ -121,7 +129,7 @@ export function createServicesRepo(db: Database) {
       db.prepare(
         `UPDATE services SET name = ?, description = ?, icon = ?, image_id = ?, price_cents = ?, min_qty = ?, max_qty = ?,
                 default_qty = ?, quick_quantities = ?, unit_singular = ?, unit_plural = ?, badge = ?, active = ?,
-                updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+                kind = ?, features = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
           WHERE id = ?`,
       ).run(
         input.name,
@@ -137,6 +145,8 @@ export function createServicesRepo(db: Database) {
         input.unitPlural,
         input.badge,
         input.active ? 1 : 0,
+        input.kind,
+        JSON.stringify(input.features),
         id,
       );
       return this.get(id)!;

@@ -9,6 +9,7 @@ import { cn } from '@/lib/cn';
 import { MOTION } from '@/config/site';
 
 interface Props {
+  step: string;
   question: string;
   services: PublicService[];
   quantities: Record<string, number>;
@@ -17,15 +18,15 @@ interface Props {
   emptyText: string;
 }
 
-/** Etapa 02: quantidade por formato, com atalhos e digitação manual. */
-export function QuantityPanel({ question, services, quantities, onQuantity, onRemove, emptyText }: Props) {
+/** Quantidade de cada avulso, com atalhos e digitação manual. */
+export function QuantityPanel({ step, question, services, quantities, onQuantity, onRemove, emptyText }: Props) {
   const selected = services.filter((s) => quantities[s.id]);
 
   return (
     <div className="glass rounded-[28px] p-5 sm:p-7">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="eyebrow">
-          <span className="text-bone/40">Etapa 02 — </span>
+          <span className="text-bone/40">Etapa {step} — </span>
           {question}
         </p>
         {selected.length > 0 && (

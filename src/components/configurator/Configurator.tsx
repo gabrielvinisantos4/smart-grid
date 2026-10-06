@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'motion/react';
+import { Smartphone } from 'lucide-react';
 import { useSiteData } from '@/hooks/useSiteData';
 import { useQuoteBuilder } from '@/hooks/useQuoteBuilder';
 import { useQuoteSubmit } from '@/hooks/useQuoteSubmit';
@@ -8,6 +9,7 @@ import { Modal } from '@/components/ui/Modal';
 import { Reveal } from '@/components/ui/Reveal';
 import { IS_DEMO, SECTION_IDS, sectionIndex } from '@/config/site';
 import { ServiceCard } from './ServiceCard';
+import { PlanCard } from './PlanCard';
 import { QuantityPanel } from './QuantityPanel';
 import { QuoteSummary } from './QuoteSummary';
 import { MobileQuoteBar } from './MobileQuoteBar';
@@ -36,7 +38,10 @@ export function Configurator() {
 
   if (!data) return null;
   const texts = data.settings.configurator;
-  const progress = builder.lines.length === 0 ? 0 : touched ? 3 : 2;
+  const plans = services.filter((s) => s.kind === 'plan');
+  const units = services.filter((s) => s.kind !== 'plan');
+  const selectedUnits = units.filter((s) => builder.isSelected(s.id)).length;
+  const progress = builder.lines.length === 0 ? 0 : (builder.plan && selectedUnits > 0) || touched ? 3 : 2;
   const preview = { lines: builder.lines, totalCents: builder.totalCents };
 
   const setQuantity = (id: string, value: number) => {
@@ -55,6 +60,7 @@ export function Configurator() {
     lines: builder.lines,
     totalCents: builder.totalCents,
     totalUnits: builder.totalUnits,
+    totals: builder.totals,
     busy,
     onRequest: openRequest,
     onWhatsApp: sendWhatsApp,
@@ -69,47 +75,81 @@ export function Configurator() {
         <SectionHeading index={sectionIndex(3, data.settings.process.enabled)} eyebrow={texts.eyebrow} title={texts.title} text={texts.text} />
 
         <Reveal delay={0.1} className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] pt-6">
-          <StepIndicator progress={progress} />
-          {builder.lines.length > 0 && (
-            <button type="button" onClick={builder.reset} className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-fog transition hover:text-bone">
-              Limpar seleção
-            </button>
-          )}
+          <StepIndicator progress={progress} labels={plans.length ? ['Plano', 'Avulsos', 'Investimento'] : ['Formato', 'Quantidade', 'Investimento']} />
+          <div className="flex flex-wrap items-center gap-4">
+            {texts.highlight && (
+              <span className="glass-pill inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[12.5px] text-bone/85">
+                <Smartphone className="h-3.5 w-3.5 text-accent" />
+                {texts.highlight}
+              </span>
+            )}
+            {builder.lines.length > 0 && (
+              <button type="button" onClick={builder.reset} className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-fog transition hover:text-bone">
+                Limpar seleção
+              </button>
+            )}
+          </div>
         </Reveal>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:gap-10 2xl:grid-cols-[minmax(0,1fr)_400px]">
-          <div className="min-w-0 space-y-8">
-            <div>
-              <p className="eyebrow mb-5">
-                <span className="text-bone/40">Etapa 01 — </span>
-                {texts.stepTypeLabel}
-              </p>
-              <div className="grid gap-4 xl:grid-cols-3">
-                {services.map((service, i) => (
-                  <ServiceCard
-                    key={service.id}
-                    index={i}
-                    service={service}
-                    image={media(service.imageId)}
-                    selected={builder.isSelected(service.id)}
-                    quantity={builder.quantities[service.id] ?? service.defaultQty}
-                    onToggle={() => builder.toggle(service.id)}
-                    onQuantity={(v) => setQuantity(service.id, v)}
-                  />
-                ))}
+          <div className="min-w-0 space-y-12">
+            {plans.length > 0 && (
+              <div>
+                <p className="eyebrow mb-5">
+                  <span className="text-bone/40">Etapa 01 — </span>
+                  {texts.stepPlanLabel}
+                </p>
+                <div role="radiogroup" aria-label={texts.stepPlanLabel} className="grid gap-4 md:grid-cols-3">
+                  {plans.map((service, i) => (
+                    <PlanCard
+                      key={service.id}
+                      index={i}
+                      service={service}
+                      selected={builder.isSelected(service.id)}
+                      onSelect={() => builder.toggle(service.id)}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            <Reveal delay={0.1}>
-              <QuantityPanel
-                question={texts.quantityQuestion}
-                services={services}
-                quantities={builder.quantities}
-                onQuantity={setQuantity}
-                onRemove={builder.remove}
-                emptyText={texts.emptyText}
-              />
-            </Reveal>
+            {units.length > 0 && (
+              <div>
+                <p className="eyebrow mb-5">
+                  <span className="text-bone/40">Etapa {plans.length ? '02' : '01'} — </span>
+                  {texts.stepTypeLabel}
+                  {plans.length > 0 && <span className="text-bone/40"> (opcional)</span>}
+                </p>
+                <div className="grid gap-4 xl:grid-cols-3">
+                  {units.map((service, i) => (
+                    <ServiceCard
+                      key={service.id}
+                      index={i}
+                      service={service}
+                      image={media(service.imageId)}
+                      selected={builder.isSelected(service.id)}
+                      quantity={builder.quantities[service.id] ?? service.defaultQty}
+                      onToggle={() => builder.toggle(service.id)}
+                      onQuantity={(v) => setQuantity(service.id, v)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {(selectedUnits > 0 || plans.length === 0) && (
+              <Reveal delay={0.1}>
+                <QuantityPanel
+                  step={plans.length ? '03' : '02'}
+                  question={texts.quantityQuestion}
+                  services={units}
+                  quantities={builder.quantities}
+                  onQuantity={setQuantity}
+                  onRemove={builder.remove}
+                  emptyText={texts.emptyText}
+                />
+              </Reveal>
+            )}
           </div>
 
           <aside className="hidden lg:block">

@@ -103,13 +103,14 @@ export function QuotesPage() {
                             {q.lines.map((l) => (
                               <div key={l.serviceId} className="flex justify-between py-1.5 text-[13.5px]">
                                 <span>
-                                  {l.name} <span className="text-fog">· {l.quantity} {unitLabel(l)} × {formatBRL(l.unitPriceCents)}</span>
+                                  {l.name}{' '}
+                                  <span className="text-fog">· {l.kind === 'plan' ? 'plano mensal' : `${l.quantity} ${unitLabel(l)} × ${formatBRL(l.unitPriceCents)}`}</span>
                                 </span>
                                 <span className="tabular-nums">{formatBRL(l.subtotalCents)}</span>
                               </div>
                             ))}
                             <div className="mt-2 flex justify-between border-t border-white/[0.07] pt-3 text-[15px] font-medium">
-                              <span>Total mensal</span>
+                              <span>Total</span>
                               <span className="tabular-nums">{formatBRL(q.totalCents)}</span>
                             </div>
                           </div>

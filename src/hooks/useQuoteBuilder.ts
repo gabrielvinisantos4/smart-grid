@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { PublicService, QuoteItemInput } from '@shared/types';
-import { buildQuoteLines, clampQuantity, sumLines } from '@shared/pricing';
+import { buildQuoteLines, clampQuantity, splitTotals, sumLines } from '@shared/pricing';
 
 /**
  * Estado do configurador: quais serviços estão selecionados e em que
@@ -15,10 +15,12 @@ export function useQuoteBuilder(services: PublicService[]) {
     (id: string) => {
       setQuantities((current) => {
         const next = { ...current };
+        const service = byId.get(id);
         if (next[id]) delete next[id];
-        else {
-          const service = byId.get(id);
-          if (service) next[id] = service.defaultQty;
+        else if (service) {
+          // Só um plano mensal por orçamento: escolher outro substitui o anterior.
+          if (service.kind === 'plan') for (const s of byId.values()) if (s.kind === 'plan') delete next[s.id];
+          next[id] = service.kind === 'plan' ? 1 : service.defaultQty;
         }
         return next;
       });
@@ -51,7 +53,9 @@ export function useQuoteBuilder(services: PublicService[]) {
   );
   const lines = useMemo(() => buildQuoteLines(services, items), [services, items]);
   const totalCents = useMemo(() => sumLines(lines), [lines]);
-  const totalUnits = useMemo(() => lines.reduce((n, l) => n + l.quantity, 0), [lines]);
+  const totalUnits = useMemo(() => lines.filter((l) => l.kind !== 'plan').reduce((n, l) => n + l.quantity, 0), [lines]);
+  const totals = useMemo(() => splitTotals(lines), [lines]);
+  const plan = useMemo(() => lines.find((l) => l.kind === 'plan') ?? null, [lines]);
 
   return {
     quantities,
@@ -64,6 +68,8 @@ export function useQuoteBuilder(services: PublicService[]) {
     lines,
     totalCents,
     totalUnits,
+    totals,
+    plan,
   };
 }
 
