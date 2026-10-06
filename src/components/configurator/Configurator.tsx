@@ -6,7 +6,7 @@ import { useQuoteSubmit } from '@/hooks/useQuoteSubmit';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Modal } from '@/components/ui/Modal';
 import { Reveal } from '@/components/ui/Reveal';
-import { SECTION_IDS } from '@/config/site';
+import { IS_DEMO, SECTION_IDS } from '@/config/site';
 import { ServiceCard } from './ServiceCard';
 import { QuantityPanel } from './QuantityPanel';
 import { QuoteSummary } from './QuoteSummary';
@@ -48,7 +48,7 @@ export function Configurator() {
     setSheetOpen(false);
     setRequestOpen(true);
   };
-  const sendWhatsApp = () => void submit('whatsapp', builder.items, preview);
+  const sendWhatsApp = () => (IS_DEMO ? openRequest() : void submit('whatsapp', builder.items, preview));
 
   const summaryProps = {
     texts,

@@ -8,3 +8,5 @@ data/uploads/*
 .env
 *.log
 .DS_Store
+dist-demo
+public/demo

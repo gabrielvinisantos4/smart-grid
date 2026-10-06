@@ -14,3 +14,6 @@ export const MOTION = {
   ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
   duration: 0.9,
 };
+
+/** Modo demonstração: página pública estática, sem backend (VITE_DEMO=1). */
+export const IS_DEMO = import.meta.env.VITE_DEMO === '1';

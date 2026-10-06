@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import type { QuoteChannel, QuoteItemInput, QuoteLine, QuoteRequestResult, SiteSettings } from '@shared/types';
 import { buildWhatsAppMessage, whatsappLink } from '@shared/pricing';
 import { publicApi } from '@/services/publicApi';
+import { IS_DEMO } from '@/config/site';
 
 export interface ClientInfo {
   clientName?: string;
@@ -28,7 +29,8 @@ export function useQuoteSubmit(settings: SiteSettings | undefined) {
       client: ClientInfo = {},
     ): Promise<QuoteRequestResult | null> => {
       if (!settings || items.length === 0) return null;
-      const popup = window.open('', '_blank');
+      // Na demonstração o WhatsApp é aberto por um link na confirmação, sem pop-up.
+      const popup = IS_DEMO ? null : window.open('', '_blank');
       if (popup) {
         popup.opener = null;
         popup.document.title = 'Abrindo WhatsApp…';
@@ -36,6 +38,7 @@ export function useQuoteSubmit(settings: SiteSettings | undefined) {
         popup.document.body.textContent = 'Abrindo WhatsApp…';
       }
       const open = (url: string | null) => {
+        if (IS_DEMO) return;
         if (!url) return popup?.close();
         if (popup && !popup.closed) popup.location.href = url;
         else window.location.href = url;

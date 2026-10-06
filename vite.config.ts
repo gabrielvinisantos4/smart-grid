@@ -4,8 +4,10 @@ import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath, URL } from 'node:url';
 
 const apiTarget = process.env.API_URL ?? 'http://localhost:3001';
+const demo = process.env.VITE_DEMO === '1';
 
 export default defineConfig({
+  base: demo ? './' : '/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -21,6 +23,6 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: demo ? 'dist-demo' : 'dist',
   },
 });

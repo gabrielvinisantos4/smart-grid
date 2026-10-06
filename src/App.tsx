@@ -4,11 +4,21 @@ import { MotionConfig } from 'motion/react';
 import { SiteDataProvider } from '@/hooks/useSiteData';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { IS_DEMO } from '@/config/site';
 
 // O painel é carregado sob demanda: o bundle público não inclui código administrativo.
 const AdminApp = lazy(() => import('@/admin/AdminApp'));
 
 export function App() {
+  if (IS_DEMO) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <SiteDataProvider>
+          <HomePage />
+        </SiteDataProvider>
+      </MotionConfig>
+    );
+  }
   return (
     <MotionConfig reducedMotion="user">
       <BrowserRouter>
