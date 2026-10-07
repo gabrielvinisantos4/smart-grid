@@ -1,5 +1,5 @@
 import type { PublicSitePayload, QuoteRequestInput, QuoteRequestResult } from '@shared/types';
-import { buildQuoteLines, buildWhatsAppMessage, sumLines, whatsappLink } from '@shared/pricing';
+import { buildQuoteLines, buildWhatsAppMessage, quoteWhatsApp, sumLines, whatsappLink } from '@shared/pricing';
 import { IS_DEMO } from '@/config/site';
 import { http } from './http';
 
@@ -33,7 +33,7 @@ async function demoQuote(input: QuoteRequestInput): Promise<QuoteRequestResult> 
       status: 'new',
       createdAt: new Date().toISOString(),
     },
-    whatsappUrl: whatsappLink(site.settings.contact.whatsapp, message),
+    whatsappUrl: whatsappLink(quoteWhatsApp(site.settings.contact), message),
   };
 }
 

@@ -35,6 +35,8 @@ export const seedLocalMedia: { id: string; file: string; alt: string }[] = [
   { id: 'm-pf-farmacia', file: 'portfolio-farmacia.jpg', alt: 'Vídeo de humor para farmácia' },
   { id: 'm-pf-combustivel', file: 'portfolio-branco-garage-combustivel.jpg', alt: 'Vídeo da Branco Garage: gasolina ou álcool' },
   { id: 'm-pf-saude', file: 'portfolio-saude-consultorio.jpg', alt: 'Vídeo gravado em consultório médico' },
+  { id: 'm-pf-laboratorio', file: 'portfolio-laboratorio-coleta.jpg', alt: 'Vídeo de coleta de exames em domicílio' },
+  { id: 'm-pf-pontocountry', file: 'portfolio-ponto-country.jpg', alt: 'Vídeo da Ponto Country para Barretos' },
   { id: 'm-result-panificadora', file: 'resultado-panificadoravalerio.jpg', alt: 'Reel da @panificadoravalerio: você é muito simpática' },
 ];
 
@@ -243,6 +245,8 @@ export const defaultSettings: SiteSettings = {
       { id: 'g6', mediaId: 'm-pf-farmacia', label: 'Farmácia', caption: 'Humor no balcão', layout: 'reel', grayscale: false, videoUrl: 'video/portfolio/farmacia.mp4' },
       { id: 'g7', mediaId: 'm-pf-combustivel', label: 'Automotivo', caption: 'Branco Garage', layout: 'reel', grayscale: false, videoUrl: 'video/portfolio/branco-garage-combustivel.mp4' },
       { id: 'g8', mediaId: 'm-pf-saude', label: 'Saúde', caption: 'Rotina de consultório', layout: 'reel', grayscale: false, videoUrl: 'video/portfolio/saude-consultorio.mp4' },
+      { id: 'g9', mediaId: 'm-pf-pontocountry', label: 'Moda country', caption: 'Ponto Country', layout: 'reel', grayscale: false, videoUrl: 'video/portfolio/ponto-country.mp4' },
+      { id: 'g10', mediaId: 'm-pf-laboratorio', label: 'Laboratório', caption: 'Coleta em domicílio', layout: 'reel', grayscale: false, videoUrl: 'video/portfolio/laboratorio-coleta.mp4' },
     ],
   },
   finalCta: {
@@ -252,7 +256,10 @@ export const defaultSettings: SiteSettings = {
     imageId: 'm-ref-editing',
   },
   contact: {
-    whatsapp: '5511999999999',
+    whatsapps: [
+      { name: 'Gabriel Vinicius', number: '5544997317970' },
+      { name: 'Daniele Mochi', number: '5544999877430' },
+    ],
     instagrams: ['gabrielvinisantos', 'danielemochii'],
     email: '',
     city: 'Colorado — PR',

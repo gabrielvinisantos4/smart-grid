@@ -78,7 +78,7 @@ describe('API pública', () => {
     });
     assert.equal(res.status, 201);
     assert.equal(res.body.quote.totalCents, 8 * 25000 + 4 * 14000 + 2 * 40000);
-    assert.match(res.body.whatsappUrl, /^https:\/\/wa\.me\/\d+\?text=/);
+    assert.match(res.body.whatsappUrl, /^https:\/\/wa\.me\/5544997317970\?text=/, 'orçamento vai para o primeiro número');
   });
 
   test('quantidade fora dos limites é ajustada ao máximo do serviço', async () => {

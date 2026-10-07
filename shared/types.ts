@@ -109,6 +109,12 @@ export type PublicService = Pick<
 /* Configurações do site                                                      */
 /* -------------------------------------------------------------------------- */
 
+export interface ContactPhone {
+  name: string;
+  /** Só dígitos, com DDI e DDD. Ex.: 5544997317970 */
+  number: string;
+}
+
 export type GalleryLayout = 'tall' | 'wide' | 'large' | 'square' | 'reel';
 
 export interface GalleryItem {
@@ -224,7 +230,8 @@ export interface SiteSettings {
     imageId: string | null;
   };
   contact: {
-    whatsapp: string;
+    /** Números de WhatsApp da equipe. O primeiro recebe os orçamentos do configurador. */
+    whatsapps: ContactPhone[];
     /** Perfis do Instagram do estúdio (sem @). */
     instagrams: string[];
     email: string;

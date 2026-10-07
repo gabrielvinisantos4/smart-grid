@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import type { AppContext } from '../context.ts';
 import { toPublicService } from '../services/servicesRepo.ts';
 import { quoteRequestSchema } from '../services/schemas.ts';
-import { buildQuoteLines, buildWhatsAppMessage, sumLines, whatsappLink } from '../../shared/pricing.ts';
+import { buildQuoteLines, buildWhatsAppMessage, quoteWhatsApp, sumLines, whatsappLink } from '../../shared/pricing.ts';
 import type { PublicSitePayload, QuoteRequestResult } from '../../shared/types.ts';
 import { HttpError } from '../middleware/errors.ts';
 import { rateLimit } from '../middleware/security.ts';
@@ -68,7 +68,7 @@ export function publicRoutes(ctx: AppContext) {
         clientCompany: quote.clientCompany,
         notes: quote.notes,
       });
-      const result: QuoteRequestResult = { quote, whatsappUrl: whatsappLink(settings.contact.whatsapp, message) };
+      const result: QuoteRequestResult = { quote, whatsappUrl: whatsappLink(quoteWhatsApp(settings.contact), message) };
       res.status(201).json(result);
     },
   );

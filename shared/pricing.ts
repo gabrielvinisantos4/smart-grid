@@ -107,6 +107,19 @@ export function buildWhatsAppMessage(options: WhatsAppMessageOptions): string {
   return parts.join('\n');
 }
 
+/** Número que recebe os orçamentos: o primeiro da lista de contatos. */
+export function quoteWhatsApp(contact: { whatsapps: { number: string }[] }): string {
+  return contact.whatsapps[0]?.number ?? '';
+}
+
+/** 5544997317970 → (44) 99731-7970 */
+export function formatPhoneBR(number: string): string {
+  const d = number.replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '');
+  if (d.length === 11) return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+  if (d.length === 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  return number;
+}
+
 export function whatsappLink(phone: string, message: string): string | null {
   const digits = phone.replace(/\D/g, '');
   if (digits.length < 10) return null;

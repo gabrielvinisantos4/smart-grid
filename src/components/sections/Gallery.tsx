@@ -47,7 +47,7 @@ export function Gallery() {
         <SectionHeading index={sectionIndex(4, data.settings.process.enabled)} eyebrow={gallery.eyebrow} title={gallery.title} text={gallery.text} />
 
         {allReels ? (
-          <div className="mt-16 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:mt-24 md:gap-3 lg:grid-cols-4">
+          <div className={cn('mt-16 grid grid-cols-2 gap-2.5 md:mt-24 md:gap-3', items.length % 5 === 0 ? 'md:grid-cols-5' : 'sm:grid-cols-3 lg:grid-cols-4')}>
             {items.map((item, index) => (
               <GalleryCard key={item.id} item={item} index={index} media={media(item.mediaId)} onOpen={() => setActive(index)} style={{ aspectRatio: GALLERY_LAYOUTS.reel.aspect }} />
             ))}

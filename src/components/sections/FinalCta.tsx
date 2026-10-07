@@ -15,7 +15,6 @@ export function FinalCta() {
   const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
   if (!data) return null;
   const { finalCta, contact } = data.settings;
-  const whatsapp = contact.whatsapp.replace(/\D/g, '');
 
   return (
     <section className="px-3 pb-24 md:px-6">
@@ -37,18 +36,19 @@ export function FinalCta() {
             <LinkButton href={`#${SECTION_IDS.configurator}`} size="lg" arrow>
               {finalCta.ctaLabel}
             </LinkButton>
-            {whatsapp && (
+            {contact.whatsapps.map((p) => (
               <LinkButton
-                href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(contact.whatsappIntro)}`}
+                key={p.number}
+                href={`https://wa.me/${p.number}?text=${encodeURIComponent(contact.whatsappIntro)}`}
                 target="_blank"
                 rel="noreferrer"
                 size="lg"
                 variant="glass"
                 icon={<WhatsAppIcon className="h-[18px] w-[18px]" />}
               >
-                Falar no WhatsApp
+                {contact.whatsapps.length > 1 && p.name ? `Falar com ${p.name.split(' ')[0]}` : 'Falar no WhatsApp'}
               </LinkButton>
-            )}
+            ))}
           </Reveal>
           {contact.instagrams.length > 0 && (
             <Reveal delay={0.3} className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">

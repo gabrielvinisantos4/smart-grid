@@ -147,11 +147,18 @@ export const siteSettingsSchema = z.object({
   }),
   finalCta: z.object({ title: text(160), text: text(300), ctaLabel: text(40), imageId: mediaRef }),
   contact: z.object({
-    whatsapp: z
-      .string()
-      .trim()
-      .transform((v) => v.replace(/\D/g, ''))
-      .refine((v) => v === '' || (v.length >= 10 && v.length <= 15), 'WhatsApp inválido. Use DDI + DDD + número.'),
+    whatsapps: z
+      .array(
+        z.object({
+          name: text(40),
+          number: z
+            .string()
+            .trim()
+            .transform((v) => v.replace(/\D/g, ''))
+            .refine((v) => v.length >= 10 && v.length <= 15, 'WhatsApp inválido. Use DDI + DDD + número.'),
+        }),
+      )
+      .max(4),
     instagrams: z
       .array(text(60).transform((v) => v.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/.*$/, '')))
       .max(6)

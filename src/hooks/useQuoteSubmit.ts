@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import type { QuoteChannel, QuoteItemInput, QuoteLine, QuoteRequestResult, SiteSettings } from '@shared/types';
-import { buildWhatsAppMessage, whatsappLink } from '@shared/pricing';
+import { buildWhatsAppMessage, quoteWhatsApp, whatsappLink } from '@shared/pricing';
 import { publicApi } from '@/services/publicApi';
 import { IS_DEMO } from '@/config/site';
 
@@ -60,7 +60,7 @@ export function useQuoteSubmit(settings: SiteSettings | undefined) {
           clientCompany: client.clientCompany,
           notes: client.notes,
         });
-        open(whatsappLink(settings.contact.whatsapp, message));
+        open(whatsappLink(quoteWhatsApp(settings.contact), message));
         setError(e instanceof Error ? e.message : 'Não foi possível registrar o orçamento.');
         return null;
       } finally {

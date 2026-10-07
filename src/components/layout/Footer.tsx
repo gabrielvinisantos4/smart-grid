@@ -4,16 +4,19 @@ import { Brand } from '@/components/ui/Brand';
 import { InstagramIcon, WhatsAppIcon } from '@/components/ui/SocialIcons';
 import { publicNav } from '@/data/navigation';
 import { SECTION_IDS } from '@/config/site';
+import { formatPhoneBR } from '@shared/pricing';
 
 export function Footer() {
   const { data } = useSiteData();
   if (!data) return null;
   const { brand, contact, footer } = data.settings;
-  const whatsappDigits = contact.whatsapp.replace(/\D/g, '');
-
   const contacts = [
     ...contact.instagrams.map((handle) => ({ icon: InstagramIcon, label: `@${handle}`, href: `https://instagram.com/${handle}` })),
-    whatsappDigits && { icon: WhatsAppIcon, label: 'WhatsApp', href: `https://wa.me/${whatsappDigits}` },
+    ...contact.whatsapps.map((p) => ({
+      icon: WhatsAppIcon,
+      label: p.name ? `${p.name} · ${formatPhoneBR(p.number)}` : formatPhoneBR(p.number),
+      href: `https://wa.me/${p.number}`,
+    })),
     contact.email && { icon: Mail, label: contact.email, href: `mailto:${contact.email}` },
   ].filter(Boolean) as { icon: typeof Mail; label: string; href: string }[];
 

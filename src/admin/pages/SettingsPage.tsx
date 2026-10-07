@@ -463,9 +463,37 @@ export function SettingsPage() {
         <div className="grid gap-5 lg:grid-cols-2">
           <Card title="Canais">
             <div className="space-y-4">
-              <Field label="WhatsApp" hint="Com DDI e DDD, só números. Ex.: 5511999999999">
-                <TextInput disabled={ro} inputMode="tel" value={draft.contact.whatsapp} onChange={(e) => update('contact', { whatsapp: e.target.value })} />
-              </Field>
+              <div>
+                <p className="mb-2 font-mono text-[10.5px] uppercase tracking-[0.18em] text-mist">WhatsApp</p>
+                <p className="mb-3 text-[12.5px] text-fog">Com DDI e DDD, ex.: 5544997317970. O primeiro número recebe os orçamentos do site.</p>
+                <div className="space-y-2">
+                  {draft.contact.whatsapps.map((phone, i) => {
+                    const set = (p: Partial<typeof phone>) =>
+                      update('contact', { whatsapps: draft.contact.whatsapps.map((x, j) => (j === i ? { ...x, ...p } : x)) });
+                    return (
+                      <div key={i} className="flex gap-2">
+                        <TextInput disabled={ro} aria-label="Nome" placeholder="Nome" maxLength={40} value={phone.name} onChange={(e) => set({ name: e.target.value })} />
+                        <TextInput disabled={ro} aria-label="Número" inputMode="tel" placeholder="5544999999999" value={phone.number} onChange={(e) => set({ number: e.target.value })} />
+                        {!ro && (
+                          <button
+                            type="button"
+                            onClick={() => update('contact', { whatsapps: draft.contact.whatsapps.filter((_, j) => j !== i) })}
+                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-bone/50 hover:bg-red-400/10 hover:text-red-300"
+                            aria-label="Remover número"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
+                  {!ro && draft.contact.whatsapps.length < 4 && (
+                    <Button size="sm" variant="glass" icon={<Plus className="h-4 w-4" />} onClick={() => update('contact', { whatsapps: [...draft.contact.whatsapps, { name: '', number: '' }] })}>
+                      Adicionar número
+                    </Button>
+                  )}
+                </div>
+              </div>
               <div>
                 <p className="mb-2 font-mono text-[10.5px] uppercase tracking-[0.18em] text-mist">Instagram</p>
                 <div className="space-y-2">

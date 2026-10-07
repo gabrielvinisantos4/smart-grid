@@ -29,6 +29,10 @@ export function createSettingsRepo(db: Database) {
       if (typeof stored?.contact?.instagram === 'string' && !Array.isArray(stored.contact.instagrams)) {
         stored.contact.instagrams = stored.contact.instagram ? [stored.contact.instagram] : [];
       }
+      // Compatibilidade: versões anteriores guardavam um único número em contact.whatsapp.
+      if (typeof stored?.contact?.whatsapp === 'string' && !Array.isArray(stored.contact.whatsapps)) {
+        stored.contact.whatsapps = stored.contact.whatsapp ? [{ name: '', number: stored.contact.whatsapp }] : [];
+      }
       return mergeDefaults(defaultSettings, stored);
     },
 
