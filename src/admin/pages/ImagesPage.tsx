@@ -221,7 +221,7 @@ function GalleryEditor({ items, onChange, media, readOnly }: { items: GalleryIte
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="max-w-xl text-[13px] text-mist">
-          Misture formatos verticais, horizontais e quadrados. As fotos são organizadas automaticamente em linhas editoriais sem espaços vazios.
+          Misture formatos verticais, horizontais e quadrados, ou use o formato Reels com vídeos de clientes. Com vídeo, a foto vira a capa e o vídeo toca sem som; ao abrir, toca com som.
         </p>
         {!readOnly && (
           <Button size="sm" icon={<Plus className="h-4 w-4" />} onClick={() => setPicking(true)}>
@@ -237,8 +237,9 @@ function GalleryEditor({ items, onChange, media, readOnly }: { items: GalleryIte
             const m = media.get(item.mediaId);
             return (
               <div key={item.id} className="glass grid items-center gap-3 rounded-[20px] p-2.5 md:grid-cols-[96px_80px_1fr_150px_auto_auto]">
-                <div className="aspect-[4/3] w-24 overflow-hidden rounded-[14px] bg-ink-100">
+                <div className="relative aspect-[4/3] w-24 overflow-hidden rounded-[14px] bg-ink-100">
                   {m && <img src={thumb(m.url, 300)} alt="" className={cn('h-full w-full object-cover', item.grayscale && 'grayscale')} />}
+                  {item.videoUrl && <span className="absolute bottom-1 left-1 rounded-md bg-black/70 px-1.5 py-0.5 font-mono text-[9px] tracking-[0.12em] text-bone">VÍDEO</span>}
                 </div>
                 <TextInput aria-label="Rótulo" disabled={readOnly} value={item.label} maxLength={24} onChange={(e) => patch(item.id, { label: e.target.value })} className="h-10 font-mono text-[12px]" />
                 <TextInput aria-label="Legenda" disabled={readOnly} value={item.caption} maxLength={80} placeholder="Legenda" onChange={(e) => patch(item.id, { caption: e.target.value })} className="h-10" />
@@ -252,6 +253,15 @@ function GalleryEditor({ items, onChange, media, readOnly }: { items: GalleryIte
                 <label className="flex items-center gap-2 px-2 text-[12.5px] text-mist">
                   <Toggle checked={item.grayscale} disabled={readOnly} onChange={(v) => patch(item.id, { grayscale: v })} label="Preto e branco" /> P&B
                 </label>
+                <TextInput
+                  aria-label="Vídeo (.mp4 ou .webm)"
+                  disabled={readOnly}
+                  value={item.videoUrl ?? ''}
+                  maxLength={500}
+                  placeholder="Vídeo opcional: video/portfolio/cliente.mp4 ou link https"
+                  onChange={(e) => patch(item.id, { videoUrl: e.target.value })}
+                  className="h-10 font-mono text-[12px] md:order-last md:col-span-6"
+                />
                 {!readOnly && (
                   <div className="flex items-center gap-0.5">
                     <button onClick={() => onChange(move(items, i, -1))} disabled={i === 0} className="flex h-9 w-9 items-center justify-center rounded-xl text-bone/60 hover:bg-white/5 disabled:opacity-25" aria-label="Subir">
@@ -276,7 +286,7 @@ function GalleryEditor({ items, onChange, media, readOnly }: { items: GalleryIte
         title="Adicionar à galeria"
         onPick={(m) => {
           void media.reload();
-          onChange([...items, { id: uid(), mediaId: m.id, label: String(items.length + 1).padStart(3, '0'), caption: '', layout: 'square', grayscale: true }]);
+          onChange([...items, { id: uid(), mediaId: m.id, label: String(items.length + 1).padStart(3, '0'), caption: '', layout: 'square', grayscale: true, videoUrl: '' }]);
         }}
       />
     </div>

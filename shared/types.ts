@@ -109,7 +109,7 @@ export type PublicService = Pick<
 /* Configurações do site                                                      */
 /* -------------------------------------------------------------------------- */
 
-export type GalleryLayout = 'tall' | 'wide' | 'large' | 'square';
+export type GalleryLayout = 'tall' | 'wide' | 'large' | 'square' | 'reel';
 
 export interface GalleryItem {
   id: string;
@@ -118,6 +118,8 @@ export interface GalleryItem {
   caption: string;
   layout: GalleryLayout;
   grayscale: boolean;
+  /** Vídeo do cliente (.mp4/.webm). Com vídeo, a foto vira a capa. */
+  videoUrl?: string;
 }
 
 /**

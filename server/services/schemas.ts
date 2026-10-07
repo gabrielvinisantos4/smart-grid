@@ -3,6 +3,11 @@ import { ICON_NAMES } from '../../shared/icons.ts';
 
 const text = (max: number) => z.string().trim().max(max);
 const mediaRef = z.string().trim().max(64).nullable();
+const videoPath = z
+  .string()
+  .trim()
+  .max(500)
+  .regex(/^(https:\/\/\S+|[\w./-]+)\.(mp4|webm)(\?\S*)?$/i, 'Use um arquivo .mp4 ou .webm (caminho do site ou link https).');
 
 export const serviceInputSchema = z
   .object({
@@ -91,11 +96,7 @@ export const siteSettingsSchema = z.object({
     eyebrow: text(60),
     title: text(160),
     text: text(300),
-    videoUrl: z
-      .string()
-      .trim()
-      .max(500)
-      .regex(/^(https:\/\/\S+|[\w./-]+)\.(mp4|webm)(\?\S*)?$/i, 'Use um arquivo .mp4 ou .webm (caminho do site ou link https).'),
+    videoUrl: videoPath,
     posterUrl: z
       .string()
       .trim()
@@ -137,8 +138,9 @@ export const siteSettingsSchema = z.object({
           mediaId: z.string().max(64),
           label: text(24),
           caption: text(80),
-          layout: z.enum(['tall', 'wide', 'large', 'square']),
+          layout: z.enum(['tall', 'wide', 'large', 'square', 'reel']),
           grayscale: z.boolean(),
+          videoUrl: z.union([z.literal(''), videoPath]).default(''),
         }),
       )
       .max(40),

@@ -151,6 +151,20 @@ describe('Autenticação e permissões', () => {
     assert.equal(res.status, 403);
   });
 
+  test('galeria aceita vídeo do site e recusa link perigoso', async () => {
+    const cookie = await login('owner@test.dev', 'owner-password-123');
+    const settings = (await call('GET', '/api/admin/settings', { cookie })).body;
+    assert.match(settings.gallery.items[0].videoUrl, /^video\/portfolio\/.+\.mp4$/);
+    const withVideo = (videoUrl: string) => ({
+      ...settings,
+      gallery: { ...settings.gallery, items: [{ ...settings.gallery.items[0], videoUrl }] },
+    });
+    assert.equal((await call('PUT', '/api/admin/settings', { cookie, body: withVideo('javascript:alert(1)//.mp4') })).status, 400);
+    const ok = await call('PUT', '/api/admin/settings', { cookie, body: withVideo('video/portfolio/novo.mp4') });
+    assert.equal(ok.status, 200, JSON.stringify(ok.body));
+    assert.equal(ok.body.gallery.items[0].videoUrl, 'video/portfolio/novo.mp4');
+  });
+
   test('logout invalida a sessão no servidor', async () => {
     const cookie = await login('owner@test.dev', 'owner-password-123');
     assert.equal((await call('POST', '/api/auth/logout', { cookie })).status, 204);

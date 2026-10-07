@@ -10,6 +10,7 @@ export const GALLERY_LAYOUTS: Record<GalleryLayout, { label: string; aspect: num
   wide: { label: 'Horizontal', aspect: 1.45 },
   square: { label: 'Quadrada', aspect: 1 },
   tall: { label: 'Vertical', aspect: 0.68 },
+  reel: { label: 'Reels (9:16)', aspect: 9 / 16 },
 };
 
 /**
