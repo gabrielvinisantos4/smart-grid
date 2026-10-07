@@ -58,7 +58,7 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    background: var(--color-ink);
+    /* o fundo fica no <html> para o vídeo fixo (z-index negativo) aparecer atrás das seções */
     color: var(--color-bone);
     font-family: var(--font-sans);
     font-feature-settings: 'ss01', 'cv11';

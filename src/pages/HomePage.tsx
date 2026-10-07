@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useSiteData } from '@/hooks/useSiteData';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { ScrollVideoBackdrop } from '@/components/layout/ScrollVideoBackdrop';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
 import { Results } from '@/components/sections/Results';
@@ -46,6 +47,7 @@ export function HomePage() {
       <AnimatePresence>{loading && <Splash />}</AnimatePresence>
       {data && (
         <>
+          <ScrollVideoBackdrop />
           <Navbar />
           <main>
             <Hero />
