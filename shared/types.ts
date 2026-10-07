@@ -195,8 +195,10 @@ export interface SiteSettings {
     eyebrow: string;
     title: string;
     text: string;
-    /** Caminho do manifest.json gerado por `npm run frames`. */
-    framesPath: string;
+    /** Vídeo exibido em loop (caminho no site ou URL https de um .mp4/.webm). */
+    videoUrl: string;
+    /** Imagem mostrada enquanto o vídeo carrega. */
+    posterUrl: string;
     steps: Pillar[];
   };
   results: {

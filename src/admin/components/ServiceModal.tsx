@@ -167,7 +167,7 @@ export function ServiceModal({ open, service, media, onClose, onSaved }: Props) 
             )}
             {form.kind === 'plan' && (
               <p className="rounded-2xl border border-white/[0.07] bg-black/20 px-4 py-3 text-[13px] leading-relaxed text-mist">
-                Planos têm valor fixo por mês. Coloque a quantidade de vídeos no nome (ex.: “8 vídeos por mês”) para o site calcular o valor por vídeo.
+                Planos têm valor fixo por mês; o cliente escolhe um plano e não define quantidade.
               </p>
             )}
             <Field label="Selo (opcional)" hint='Ex.: "Mais pedido", "Premium"'>

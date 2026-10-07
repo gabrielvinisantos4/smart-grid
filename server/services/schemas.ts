@@ -91,11 +91,16 @@ export const siteSettingsSchema = z.object({
     eyebrow: text(60),
     title: text(160),
     text: text(300),
-    framesPath: z
+    videoUrl: z
       .string()
       .trim()
-      .max(200)
-      .regex(/^(\/?[\w-]+\/)*manifest\.json$/, 'Use o caminho do manifest.json, ex.: scrub/edicao/manifest.json'),
+      .max(500)
+      .regex(/^(https:\/\/\S+|[\w./-]+)\.(mp4|webm)(\?\S*)?$/i, 'Use um arquivo .mp4 ou .webm (caminho do site ou link https).'),
+    posterUrl: z
+      .string()
+      .trim()
+      .max(500)
+      .regex(/^$|^(https:\/\/\S+|[\w./-]+)\.(jpe?g|png|webp|avif)(\?\S*)?$/i, 'Use uma imagem .jpg, .png, .webp ou .avif.'),
     steps: z.array(z.object({ title: text(40), text: text(200) })).min(1).max(6),
   }),
   results: z.object({

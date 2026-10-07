@@ -14,7 +14,7 @@
       ]
     },
     {
-      "source": "/(assets|scrub)/(.*)",
+      "source": "/(assets|video)/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ]

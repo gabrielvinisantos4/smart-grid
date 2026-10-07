@@ -17,9 +17,6 @@ interface Props {
 /** Plano mensal de preço fixo (seleção única, como um botão de opção). */
 export function PlanCard({ service, index, selected, onSelect }: Props) {
   const spotlight = useSpotlight<HTMLButtonElement>();
-  // "8 vídeos por mês" → R$ 150 por vídeo (só quando o nome traz a quantidade).
-  const count = Number(service.name.match(/\d+/)?.[0] ?? 0);
-  const perUnit = count > 1 ? Math.round(service.priceCents / count) : null;
 
   return (
     <motion.div
@@ -69,7 +66,6 @@ export function PlanCard({ service, index, selected, onSelect }: Props) {
           <span className="text-[2.2rem] font-medium leading-none tracking-[-0.05em] text-bone">{formatBRL(service.priceCents)}</span>
           <span className="text-[13px] text-fog">/mês</span>
         </div>
-        {perUnit && <p className="mt-1.5 font-mono text-[11px] tabular-nums text-fog">≈ {formatBRL(perUnit)} por vídeo</p>}
 
         {service.features.length > 0 && (
           <ul className="mt-6 space-y-2.5 border-t border-white/[0.07] pt-5">

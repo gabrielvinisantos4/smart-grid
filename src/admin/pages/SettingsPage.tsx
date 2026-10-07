@@ -107,7 +107,7 @@ function TextsTab({ draft, update, ro }: { draft: SiteSettings; update: Update; 
         </div>
       </Group>
 
-      <Group title="Processo — vídeo na rolagem" description="O vídeo avança e volta conforme a pessoa rola a página. As etapas acompanham o progresso do vídeo.">
+      <Group title="Processo — vídeo" description="Vídeo de bastidores em loop. As etapas acendem conforme o vídeo avança.">
         <div className="flex items-center justify-between rounded-2xl border border-white/[0.07] bg-black/20 px-4 py-3 md:col-span-2">
           <div>
             <p className="text-[14px]">{process.enabled ? 'Seção visível' : 'Seção oculta'}</p>
@@ -125,7 +125,7 @@ function TextsTab({ draft, update, ro }: { draft: SiteSettings; update: Update; 
           <TextInput disabled={ro} value={process.text} onChange={(e) => update('process', { text: e.target.value })} />
         </Field>
         <div className="space-y-3 md:col-span-2">
-          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-mist">Etapas (dividem o vídeo em partes iguais)</p>
+          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-mist">Etapas (acendem em sequência durante o vídeo)</p>
           {process.steps.map((p, i) => (
             <div key={i} className="grid gap-2 md:grid-cols-[200px_1fr_auto]">
               <TextInput disabled={ro} value={p.title} onChange={(e) => setStep(i, { title: e.target.value })} placeholder="Etapa" />
@@ -143,8 +143,11 @@ function TextsTab({ draft, update, ro }: { draft: SiteSettings; update: Update; 
             </Button>
           )}
         </div>
-        <Field label="Quadros do vídeo" hint="Gerados com: npm run frames -- video.mp4 nome → use scrub/nome/manifest.json" className="md:col-span-2">
-          <TextInput disabled={ro} value={process.framesPath} onChange={(e) => update('process', { framesPath: e.target.value })} className="font-mono text-[13px]" />
+        <Field label="Vídeo (.mp4 ou .webm)" hint="Caminho no site (ex.: video/bastidores.mp4) ou link https. Roda sem som, em loop." className="md:col-span-2">
+          <TextInput disabled={ro} value={process.videoUrl} onChange={(e) => update('process', { videoUrl: e.target.value })} className="font-mono text-[13px]" />
+        </Field>
+        <Field label="Imagem de capa (opcional)" hint="Aparece enquanto o vídeo carrega." className="md:col-span-2">
+          <TextInput disabled={ro} value={process.posterUrl} onChange={(e) => update('process', { posterUrl: e.target.value })} className="font-mono text-[13px]" />
         </Field>
       </Group>
 

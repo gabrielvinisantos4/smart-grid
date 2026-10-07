@@ -97,7 +97,7 @@ export function Hero() {
       {/* Fotografia principal com parallax + ken burns */}
       <motion.div className="absolute inset-0" style={{ y: imageY }}>
         <div className="absolute inset-0 animate-kenburns">
-          <SmartImage media={media(hero.imageId)} loading="eager" fetchPriority="high" className="h-full w-full" grayscale />
+          <SmartImage media={media(hero.imageId)} loading="eager" fetchPriority="high" className="h-full w-full object-[center_42%]" grayscale />
         </div>
       </motion.div>
 
@@ -127,7 +127,7 @@ export function Hero() {
             <Circle className="h-2.5 w-2.5 animate-pulse-dot fill-red-500 text-red-500" />
             REC <span className="tabular-nums text-bone/80">{timecode}</span>
           </span>
-          <span>4K · 24FPS · ISO 800 · f/1.8</span>
+          <span>4K · 60FPS · GRAVADO NO CELULAR</span>
         </div>
       </motion.div>
 

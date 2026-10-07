@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
 import { Results } from '@/components/sections/Results';
-import { ProcessScrub } from '@/components/sections/ProcessScrub';
+import { ProcessShowcase } from '@/components/sections/ProcessShowcase';
 import { Configurator } from '@/components/configurator/Configurator';
 import { Gallery } from '@/components/sections/Gallery';
 import { FinalCta } from '@/components/sections/FinalCta';
@@ -50,7 +50,7 @@ export function HomePage() {
           <main>
             <Hero />
             <About />
-            <ProcessScrub />
+            <ProcessShowcase />
             <Results />
             <Configurator />
             <Gallery />
