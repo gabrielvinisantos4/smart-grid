@@ -21,6 +21,7 @@
   --animate-kenburns: kenburns 28s ease-in-out infinite alternate;
   --animate-marquee: marquee 40s linear infinite;
   --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
+  --animate-rec: rec 1.2s steps(1, end) infinite;
   --animate-scroll-line: scroll-line 2.4s var(--ease-cine) infinite;
 
   @keyframes float {
@@ -34,6 +35,11 @@
   @keyframes marquee {
     from { transform: translate3d(0, 0, 0); }
     to { transform: translate3d(-50%, 0, 0); }
+  }
+  /* Pisca como o REC de uma câmera: aceso, apagado, aceso. */
+  @keyframes rec {
+    0% { opacity: 1; }
+    55% { opacity: 0.15; }
   }
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; }

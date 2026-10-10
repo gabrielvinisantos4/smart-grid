@@ -15,7 +15,7 @@ export function Brand({ className, inherit }: { className?: string; inherit?: bo
         className="relative flex h-6 w-6 items-center justify-center rounded-full border"
         style={{ borderColor: 'color-mix(in srgb, currentColor 40%, transparent)' }}
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-current" />
+        <span className="h-2 w-2 animate-rec rounded-full bg-red-500 shadow-[0_0_8px_rgb(239_68_68/0.8)] motion-reduce:animate-none" />
       </span>
       {brand?.name ?? ''}
     </span>
