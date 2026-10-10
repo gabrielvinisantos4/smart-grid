@@ -21,24 +21,24 @@ export function Footer() {
   ].filter(Boolean) as { icon: typeof Mail; label: string; href: string }[];
 
   return (
-    <footer id={SECTION_IDS.contact} className="relative overflow-hidden border-t border-white/[0.06] pb-28 pt-20 lg:pb-10">
+    <footer id={SECTION_IDS.contact} className="end-bg end-fg relative overflow-hidden pb-28 pt-20 lg:pb-10">
       <div className="mx-auto max-w-[1400px] px-5 md:px-8">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
-            <Brand />
-            <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-mist">{footer.text}</p>
+            <Brand inherit />
+            <p className="end-muted mt-6 max-w-sm text-[15px] leading-relaxed">{footer.text}</p>
             {contact.city && (
-              <p className="mt-6 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-fog">
+              <p className="end-faint mt-6 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em]">
                 <MapPin className="h-3.5 w-3.5" /> {contact.city}
               </p>
             )}
           </div>
           <div className="md:col-span-3">
-            <p className="eyebrow">Navegação</p>
+            <p className="eyebrow end-faint">Navegação</p>
             <ul className="mt-5 space-y-3">
               {publicNav.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="text-[15px] text-bone/70 transition hover:text-bone">
+                  <a href={item.href} className="end-link text-[15px]">
                     {item.label}
                   </a>
                 </li>
@@ -46,7 +46,7 @@ export function Footer() {
             </ul>
           </div>
           <div className="md:col-span-4">
-            <p className="eyebrow">Contato</p>
+            <p className="eyebrow end-faint">Contato</p>
             <ul className="mt-5 space-y-3">
               {contacts.map(({ icon: Icon, label, href }) => (
                 <li key={href}>
@@ -54,7 +54,7 @@ export function Footer() {
                     href={href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex items-center gap-3 text-[15px] text-bone/70 transition hover:text-bone"
+                    className="end-link group flex items-center gap-3 text-[15px]"
                   >
                     <Icon className="h-4 w-4" />
                     {label}
@@ -70,7 +70,7 @@ export function Footer() {
           aria-hidden
           className="pointer-events-none mt-20 select-none whitespace-nowrap pb-[0.06em] text-center text-[min(17vw,15rem)] font-medium leading-[0.85] tracking-[-0.06em] text-transparent"
           style={{
-            backgroundImage: 'linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.01))',
+            backgroundImage: 'linear-gradient(180deg, color-mix(in srgb, var(--end-fg) 18%, transparent), color-mix(in srgb, var(--end-fg) 2%, transparent))',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
           }}
@@ -78,7 +78,7 @@ export function Footer() {
           {brand.name}
         </p>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] pt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-fog sm:flex-row">
+        <div className="end-line end-faint mt-8 flex flex-col items-center justify-between gap-3 border-t pt-6 font-mono text-[11px] uppercase tracking-[0.18em] sm:flex-row">
           <span>
             © {new Date().getFullYear()} {brand.name}
           </span>

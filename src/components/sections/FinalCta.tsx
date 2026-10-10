@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { useEffect, useRef } from 'react';
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react';
 import { useSiteData } from '@/hooks/useSiteData';
 import { LinkButton } from '@/components/ui/Button';
 import { RichText } from '@/components/ui/RichText';
@@ -13,11 +13,22 @@ export function FinalCta() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
+
+  // Transição do fim da página para o branco (ver .end-* em index.css).
+  const { scrollYProgress: endProgress } = useScroll({ target: ref, offset: ['start 90%', 'start 20%'] });
+  const setEnd = (p: number) => document.documentElement.style.setProperty('--end', p.toFixed(3));
+  useMotionValueEvent(endProgress, 'change', setEnd);
+  useEffect(() => {
+    setEnd(endProgress.get());
+    return () => {
+      document.documentElement.style.removeProperty('--end');
+    };
+  }, [endProgress]);
   if (!data) return null;
   const { finalCta, contact } = data.settings;
 
   return (
-    <section className="px-3 pb-24 md:px-6">
+    <section className="end-bg-fade px-3 pb-24 md:px-6">
       <div ref={ref} className="relative mx-auto max-w-[1440px] overflow-hidden rounded-[32px] border border-white/[0.07] md:rounded-[44px]">
         <motion.div style={{ scale }} className="absolute inset-0">
           <SmartImage media={media(finalCta.imageId)} className="h-full w-full grayscale" />

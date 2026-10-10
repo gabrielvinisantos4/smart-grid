@@ -40,7 +40,7 @@ export function Navbar() {
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         className={cn(
           'mx-auto flex h-14 max-w-[1400px] items-center justify-between rounded-full pl-5 pr-2 transition-all duration-700 ease-[var(--ease-cine)]',
-          scrolled ? 'glass' : 'border border-transparent',
+          scrolled ? 'glass end-solid' : 'border border-transparent',
         )}
       >
         <a href={`#${SECTION_IDS.hero}`} aria-label="Início">

@@ -204,3 +204,48 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
+
+/*
+ * Final da página: --end vai de 0 a 1 conforme a chamada final sobe na tela
+ * (definido em FinalCta). O fundo passa de preto para branco e o texto do
+ * rodapé de branco para preto.
+ */
+:root {
+  --end: 0;
+  --end-white: #f8f7f4;
+  --end-black: #0b0b0b;
+}
+.end-bg {
+  background-color: color-mix(in srgb, var(--end-white) calc(var(--end) * 100%), transparent);
+}
+.end-bg-fade {
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--end-white) calc(var(--end) * 100%), transparent) 38%
+  );
+}
+.end-fg {
+  --end-fg: color-mix(in srgb, var(--end-black) calc(var(--end) * 100%), var(--color-bone));
+  color: var(--end-fg);
+}
+.end-muted {
+  color: color-mix(in srgb, var(--end-fg) 68%, transparent);
+}
+.end-faint {
+  color: color-mix(in srgb, var(--end-fg) 48%, transparent);
+}
+.end-link {
+  color: color-mix(in srgb, var(--end-fg) 72%, transparent);
+  transition: color 0.3s;
+}
+.end-link:hover {
+  color: var(--end-fg);
+}
+.end-line {
+  border-color: color-mix(in srgb, var(--end-fg) 12%, transparent);
+}
+/* Barra de navegação continua legível quando o fundo vira branco. */
+.end-solid {
+  background-color: color-mix(in srgb, rgb(12 12 14) calc(var(--end) * 90%), transparent);
+}
