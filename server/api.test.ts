@@ -81,6 +81,13 @@ describe('API pública', () => {
     assert.match(res.body.whatsappUrl, /^https:\/\/wa\.me\/5544997317970\?text=/, 'orçamento vai para o primeiro número');
   });
 
+  test('página profissional tem pagamento único de R$ 900 e quantidade fixa em 1', async () => {
+    const res = await call('POST', '/api/public/quotes', { body: { channel: 'request', items: [{ serviceId: 'pagina-profissional', quantity: 3 }] } });
+    assert.equal(res.status, 201);
+    assert.equal(res.body.quote.lines[0].quantity, 1);
+    assert.equal(res.body.quote.totalCents, 90000);
+  });
+
   test('quantidade fora dos limites é ajustada ao máximo do serviço', async () => {
     const res = await call('POST', '/api/public/quotes', { body: { channel: 'request', items: [{ serviceId: 'video-institucional', quantity: 999 }] } });
     assert.equal(res.body.quote.lines[0].quantity, 20);

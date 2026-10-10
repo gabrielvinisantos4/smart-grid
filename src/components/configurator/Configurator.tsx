@@ -120,7 +120,7 @@ export function Configurator() {
                   {texts.stepTypeLabel}
                   {plans.length > 0 && <span className="text-bone/40"> (opcional)</span>}
                 </p>
-                <div className="grid gap-4 xl:grid-cols-3">
+                <div className={units.length === 4 ? 'grid gap-4 md:grid-cols-2' : 'grid gap-4 xl:grid-cols-3'}>
                   {units.map((service, i) => (
                     <ServiceCard
                       key={service.id}

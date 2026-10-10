@@ -1,7 +1,7 @@
 import {
   Aperture, Camera, ChartLine, Clapperboard, Drone, Film, Focus, GalleryHorizontalEnd, Image, Images, Layers, LayoutGrid,
   Lightbulb, Megaphone, Mic, MonitorPlay, Music, Newspaper, Palette, PenTool, Play, Podcast, Projector, Radio, Rocket,
-  Smartphone, Sparkles, SquarePlay, Target, Type, Video, WandSparkles, type LucideIcon, type LucideProps,
+  Smartphone, Sparkles, SquarePlay, Target, Type, Video, WandSparkles, Globe, MonitorSmartphone, type LucideIcon, type LucideProps,
 } from 'lucide-react';
 import type { IconName } from '@shared/icons';
 
@@ -9,7 +9,7 @@ import type { IconName } from '@shared/icons';
 export const ICONS: Record<IconName, LucideIcon> = {
   Clapperboard, Video, Film, Camera, Aperture, Focus, Play, SquarePlay, MonitorPlay, Projector, Layers, GalleryHorizontalEnd,
   Images, Image, LayoutGrid, Smartphone, Mic, Podcast, Radio, Music, Megaphone, Newspaper, Type, PenTool, Palette, Sparkles,
-  WandSparkles, Lightbulb, Target, ChartLine, Rocket, Drone,
+  WandSparkles, Lightbulb, Target, ChartLine, Rocket, Drone, Globe, MonitorSmartphone,
 };
 
 export function DynamicIcon({ name, ...props }: { name: string } & LucideProps) {

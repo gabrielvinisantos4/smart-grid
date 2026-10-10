@@ -150,6 +150,23 @@ export const seedServices = [
     badge: null,
     features: [],
   },
+  {
+    id: 'pagina-profissional',
+    kind: 'unit',
+    name: 'Página profissional',
+    description: 'Uma página profissional para a sua marca, criada do jeito que você quiser, para apresentar seu trabalho e receber clientes.',
+    icon: 'MonitorSmartphone',
+    imageId: 'm-coffee-laptop',
+    priceCents: 90000,
+    minQty: 1,
+    maxQty: 1,
+    defaultQty: 1,
+    quickQuantities: [1],
+    unitSingular: 'página',
+    unitPlural: 'páginas',
+    badge: null,
+    features: ['Pagamento único', 'Alterações futuras: R$ 120,00 cada'],
+  },
 ];
 
 export const defaultSettings: SiteSettings = {

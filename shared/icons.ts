@@ -35,6 +35,8 @@ export const ICON_NAMES = [
   'ChartLine',
   'Rocket',
   'Drone',
+  'Globe',
+  'MonitorSmartphone',
 ] as const;
 
 export type IconName = (typeof ICON_NAMES)[number];
