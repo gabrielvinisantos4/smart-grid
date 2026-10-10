@@ -1,0 +1,6 @@
+numpy>=1.26
+scipy>=1.11
+soundfile>=0.12
+pedalboard>=0.9.10
+noisereduce>=3.0
+pyloudnorm>=0.1.1
