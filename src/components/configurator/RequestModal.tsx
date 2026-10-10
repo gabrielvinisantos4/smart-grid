@@ -40,12 +40,12 @@ export function RequestModal({ open, onClose, lines, totalCents, busy, error, on
   };
 
   return (
-    <Modal open={open} onClose={close} label="Solicitar orçamento">
+    <Modal open={open} onClose={close} label="Solicitar proposta">
       {done ? (
         <div className="p-8 text-center sm:p-10">
           <CheckCircle2 className="mx-auto h-10 w-10 text-bone" strokeWidth={1.4} />
           {done.quote.code && <p className="eyebrow mt-6">{done.quote.code}</p>}
-          <h3 className="mt-3 text-3xl font-medium tracking-[-0.04em]">Orçamento enviado.</h3>
+          <h3 className="mt-3 text-3xl font-medium tracking-[-0.04em]">Pedido enviado.</h3>
           <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-mist">
             {IS_DEMO
               ? 'Toque no botão abaixo para abrir o WhatsApp com o seu plano preenchido.'

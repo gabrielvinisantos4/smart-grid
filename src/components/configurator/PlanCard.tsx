@@ -85,7 +85,7 @@ export function PlanCard({ service, index, selected, onSelect }: Props) {
               selected ? 'bg-bone text-ink' : 'border border-white/12 text-bone/80 group-hover:border-white/30 group-hover:text-bone',
             )}
           >
-            {selected ? 'Plano escolhido' : 'Escolher plano'}
+            {selected ? 'Opção selecionada' : 'Selecionar esta opção'}
           </span>
         </div>
       </button>

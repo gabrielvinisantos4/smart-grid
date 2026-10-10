@@ -103,7 +103,7 @@ describe('API pública', () => {
     assert.equal(totalCents, 120000 + 2 * 14000);
     const message = decodeURIComponent(res.body.whatsappUrl.split('text=')[1]);
     assert.match(message, /Plano mensal: 8 vídeos por mês \(R\$ 1\.200,00\/mês\)/);
-    assert.match(message, /Carrossel: 2 carrosséis/);
+    assert.match(message, /Carrossel avulso: 2 carrosséis/);
   });
 });
 

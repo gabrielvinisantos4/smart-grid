@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { AnimatedPrice } from '@/components/ui/AnimatedPrice';
 
 interface Props {
@@ -35,8 +35,8 @@ export function MobileQuoteBar({ visible, totalCents, count, label, onOpen }: Pr
               <AnimatedPrice cents={totalCents} className="block text-xl font-medium tracking-[-0.03em] text-bone" />
             </span>
             <span className="flex h-12 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-2xl bg-bone px-4 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-ink">
-              Ver orçamento
-              <ArrowUpRight className="h-4 w-4" />
+              Continuar
+              <ArrowRight className="h-4 w-4" />
             </span>
           </button>
         </motion.div>

@@ -61,7 +61,7 @@ export function useQuoteSubmit(settings: SiteSettings | undefined) {
           notes: client.notes,
         });
         open(whatsappLink(quoteWhatsApp(settings.contact), message));
-        setError(e instanceof Error ? e.message : 'Não foi possível registrar o orçamento.');
+        setError(e instanceof Error ? e.message : 'Não foi possível registrar o pedido.');
         return null;
       } finally {
         setBusy(false);

@@ -171,7 +171,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: MOTION.ease, delay: 0.85 }}
-              className="mt-7 max-w-xl text-[17px] leading-relaxed text-bone/70 md:text-lg"
+              className="mt-7 max-w-xl whitespace-pre-line text-[17px] leading-relaxed text-bone/70 md:text-lg"
             >
               {hero.subtitle}
             </motion.p>

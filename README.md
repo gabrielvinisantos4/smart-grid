@@ -56,7 +56,7 @@ Olá! Gostaria de solicitar um orçamento personalizado.
 Plano mensal: 8 vídeos por mês (R$ 1.200,00/mês)
 
 Avulsos:
-Carrossel: 2 carrosséis
+Carrossel avulso: 2 carrosséis
 Vídeo institucional: 1 vídeo
 
 Plano: R$ 1.200,00/mês

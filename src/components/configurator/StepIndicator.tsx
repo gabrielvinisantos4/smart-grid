@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn';
 /** Progresso do fluxo: 0 = nada escolhido, 3 = pronto para enviar. */
 export function StepIndicator({ progress, labels }: { progress: number; labels: string[] }) {
   return (
-    <ol className="flex items-center gap-2 sm:gap-3" aria-label="Etapas do orçamento">
+    <ol className="flex items-center gap-2 sm:gap-3" aria-label="Etapas">
       {labels.map((label, i) => {
         const done = progress > i + 1 || (progress === 3 && i === 2);
         const active = progress === i + 1 || (progress === 0 && i === 0);

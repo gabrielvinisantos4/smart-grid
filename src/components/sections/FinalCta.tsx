@@ -43,7 +43,6 @@ export function FinalCta() {
                 target="_blank"
                 rel="noreferrer"
                 size="lg"
-                variant="glass"
                 icon={<WhatsAppIcon className="h-[18px] w-[18px]" />}
               >
                 {contact.whatsapps.length > 1 && p.name ? `Falar com ${p.name.split(' ')[0]}` : 'Falar no WhatsApp'}
@@ -52,14 +51,14 @@ export function FinalCta() {
           </Reveal>
           {contact.instagrams.length > 0 && (
             <Reveal delay={0.3} className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-bone/45">Siga no Instagram</span>
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-bone/80">Siga no Instagram</span>
               {contact.instagrams.map((handle) => (
                 <a
                   key={handle}
                   href={`https://instagram.com/${handle}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-[15px] text-bone/80 transition hover:text-bone"
+                  className="flex items-center gap-2 text-[15px] text-white transition hover:opacity-80"
                 >
                   <InstagramIcon className="h-4 w-4" />@{handle}
                 </a>

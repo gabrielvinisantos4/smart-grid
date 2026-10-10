@@ -120,7 +120,7 @@ export function ServiceCard({ service, image, index, quantity, selected, onToggl
                 transition={{ duration: 0.3 }}
                 className="flex w-full items-center justify-between text-[13px] text-bone/70 transition hover:text-bone"
               >
-                Adicionar ao plano
+                Incluir no projeto
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.06] transition group-hover:bg-bone group-hover:text-ink">
                   <Plus className="h-4 w-4" />
                 </span>

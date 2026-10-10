@@ -101,7 +101,7 @@ export function Navbar() {
             </div>
           )}
           <LinkButton href={`#${SECTION_IDS.configurator}`} size="sm" arrow className="h-10">
-            Orçamento
+            Explorar
           </LinkButton>
           <button
             onClick={() => setOpen((v) => !v)}
@@ -150,7 +150,7 @@ export function Navbar() {
               </div>
             )}
             <LinkButton href={`#${SECTION_IDS.configurator}`} onClick={() => setOpen(false)} arrow className="mt-2 w-full">
-              Montar orçamento
+              Conhecer as possibilidades
             </LinkButton>
           </motion.div>
         )}
