@@ -219,7 +219,7 @@ export const defaultSettings: SiteSettings = {
     title: 'Conteúdo que *prende a atenção.*',
     text: 'Pessoas e marcas reais que confiaram no nosso roteiro, captação e edição, e os números que cada vídeo alcançou.',
     highlightValue: '+397 mil',
-    highlightLabel: 'visualizações orgânicas em apenas seis conteúdos',
+    highlightLabel: 'visualizações em apenas seis conteúdos',
     items: [
       { id: 'r1', mediaId: 'm-result-daniellemello', views: '120 mil', caption: '', client: '', handle: 'daniellemelloa', niche: 'Lifestyle', url: '' },
       { id: 'r2', mediaId: 'm-result-rafalavalle-85', views: '85 mil', caption: '', client: '', handle: 'dra.rafalavalle', niche: 'Saúde feminina', url: '' },
