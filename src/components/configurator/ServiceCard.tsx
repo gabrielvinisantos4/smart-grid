@@ -72,6 +72,11 @@ export function ServiceCard({ service, image, index, quantity, selected, onToggl
             <span className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-2xl border border-white/15 bg-black/30 backdrop-blur-md">
               <DynamicIcon name={service.icon} className="h-[18px] w-[18px] text-bone" strokeWidth={1.6} />
             </span>
+            {image?.credit && (
+              <span className="absolute bottom-3 right-3 rounded-md bg-black/60 px-1.5 py-0.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-bone/70 backdrop-blur-sm">
+                {image.credit}
+              </span>
+            )}
           </div>
 
           {/* Texto */}

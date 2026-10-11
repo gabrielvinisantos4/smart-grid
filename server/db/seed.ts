@@ -16,6 +16,7 @@ export async function seed(ctx: AppContext, options: { silent?: boolean } = {}) 
     for (const media of seedLocalMedia) {
       const buffer = await fs.readFile(path.resolve('server/db/seed-assets', media.file));
       await ctx.media.upload(buffer, media.alt, media.id);
+      if (media.credit) ctx.db.prepare('UPDATE media SET credit = ?, credit_url = ? WHERE id = ?').run(media.credit, media.creditUrl ?? null, media.id);
     }
     transaction(ctx.db, () => {
       for (const media of seedMedia) ctx.media.insertRemote(media);

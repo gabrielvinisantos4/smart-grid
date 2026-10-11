@@ -17,11 +17,18 @@ export interface SeedMedia {
 }
 
 /** Imagens que acompanham o projeto (prints reais), copiadas para os uploads no primeiro boot. */
-export const seedLocalMedia: { id: string; file: string; alt: string }[] = [
+export const seedLocalMedia: { id: string; file: string; alt: string; credit?: string; creditUrl?: string }[] = [
   { id: 'm-ref-clapper', file: 'referencia-claquete.jpg', alt: 'Claquete em preto e branco' },
   { id: 'm-ref-editing', file: 'referencia-edicao.jpg', alt: 'Edição de vídeo no computador e no notebook' },
   { id: 'm-ref-phone', file: 'referencia-celular.jpg', alt: 'Gravação de conteúdo com o celular' },
   { id: 'm-ref-carousel', file: 'referencia-carrossel.jpg', alt: 'Mockup de carrossel do Instagram' },
+  {
+    id: 'm-ref-site',
+    file: 'servico-pagina-profissional.jpg',
+    alt: 'Mockup de página profissional para empresas',
+    credit: 'Designed by Freepik',
+    creditUrl: 'https://www.freepik.com',
+  },
   { id: 'm-result-daniellemello', file: 'resultado-daniellemelloa.jpg', alt: 'Reel de @daniellemelloa: é bem assim' },
   { id: 'm-result-rafalavalle-85', file: 'resultado-dra-rafalavalle-85mil.jpg', alt: 'Reel da @dra.rafalavalle: a libido da mulher na menopausa' },
   { id: 'm-result-rafalavalle-78', file: 'resultado-dra-rafalavalle-78mil.jpg', alt: 'Reel da @dra.rafalavalle: libido baixa nem sempre é emocional' },
@@ -156,7 +163,7 @@ export const seedServices = [
     name: 'Página profissional',
     description: 'Uma página profissional para a sua marca, criada do jeito que você quiser, para apresentar seu trabalho e receber clientes.',
     icon: 'MonitorSmartphone',
-    imageId: 'm-coffee-laptop',
+    imageId: 'm-ref-site',
     priceCents: 90000,
     minQty: 1,
     maxQty: 1,
