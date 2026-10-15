@@ -4,7 +4,7 @@
 
 | Card | Conteúdo | Composição |
 |---|---|---|
-| 01 | Capa: “Cuidar das mamas também é uma forma de se cuidar.” | Foto em arco + título editorial |
+| 01 | Capa: “O que o ultrassom de mama pode revelar?” | Foto em arco sangrando à direita + título editorial dominante |
 | 02 | O que é o ultrassom de mama? | Foto sangrando à direita com curva orgânica |
 | 03 | Quando esse exame pode ser indicado? | Fundo vinho, tópicos numerados, monograma em marca-d’água |
 | 04 | É simples e não utiliza radiação. | Foto do exame + detalhe do transdutor com gel + frase de destaque |
@@ -33,6 +33,7 @@ Fontes: Cormorant Garamond e Manrope (licença OFL, arquivos em `fonts/`).
 
 ## Tratamento das fotos
 
+- `exame-paciente.jpg`: tela do monitor desfocada (a imagem exibida não era de mama).
 - `medica-monitor.jpg`: textos ilegíveis gerados por IA no monitor e no frasco foram desfocados.
 - `exame-acolhimento.jpg`: original de 500 px ampliado com Lanczos e nitidez leve. Para máxima qualidade, substitua por um original maior.
 

@@ -101,15 +101,18 @@
   /* ==================================================================
      CARD 1 — CAPA
      ================================================================== */
-  .c1 .photo { left: 64px; right: 64px; top: 140px; height: 640px; border-radius: 300px 300px 28px 28px / 260px 260px 28px 28px; }
-  .c1 .photo img { width: 1400px; left: -24px; top: -24px; }
-  .c1 .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(248,246,242,0) 62%, rgba(116,59,74,.16) 100%); }
-  .c1 .chip { left: 104px; top: 712px; z-index: 2; padding: 13px 22px 13px 18px; border-radius: 40px; background: rgba(248,246,242,.9); backdrop-filter: blur(6px);
-              display: flex; align-items: center; gap: 12px; font: 600 15px/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--wine); }
-  .c1 .chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--rose); }
-  .c1 .title { left: var(--m); right: 70px; top: 836px; font-size: 90px; line-height: .98; }
-  .c1 .sub { left: var(--m); right: 160px; top: 1140px; font: 400 31px/1.42 var(--sans); color: var(--gray); }
-  .c1 .sub strong { font-weight: 600; color: var(--ink); }
+  /* foto em arco que sangra pela borda direita: puxa o olhar para o card seguinte */
+  .c1 .photo { left: 64px; right: 0; top: 136px; height: 540px; border-radius: 300px 0 0 28px / 260px 0 0 28px; }
+  .c1 .photo img { width: 1308px; left: -44px; top: -22px; }
+  .c1 .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(248,246,242,0) 60%, rgba(116,59,74,.18) 100%); }
+  .c1 .eyebrow { left: var(--m); top: 732px; }
+  .c1 .title { left: var(--m); right: var(--m); top: 770px; font-size: 110px; line-height: .92; letter-spacing: -.018em; }
+  .c1 .sub { left: var(--m); right: var(--m); top: 1118px; font: 400 30px/1.42 var(--sans); color: var(--ink); }
+  .c1 .foot { right: 0; }
+  .c1 .count { flex: none; font: italic 500 30px/1 var(--serif); color: var(--wine); letter-spacing: .02em; }
+  .c1 .rule { flex: 1; height: 1.5px; margin: 0 32px; background: linear-gradient(90deg, color-mix(in srgb, var(--rose) 70%, transparent), var(--rose)); }
+  .c1 .swipe { flex: none; padding-right: var(--m); }
+  .c1 .swipe svg { width: 72px; }
 
   /* ==================================================================
      CARD 2 — O QUE É
@@ -205,14 +208,15 @@
     </header>
 
     <figure class="photo"><img src="img/exame-paciente.jpg" alt="Paciente deitada e tranquila durante exame de ultrassom"></figure>
-    <p class="chip"><i></i>Ultrassom de mama</p>
 
-    <h1 class="title">Cuidar das mamas<br>também é uma forma<br>de <em>se cuidar.</em></h1>
-    <p class="sub">O que você precisa saber sobre o <strong>ultrassom de mama?</strong></p>
+    <p class="eyebrow">Um exame, muitas dúvidas</p>
+    <h1 class="title">O que o<br>ultrassom de mama<br>pode <em>revelar?</em></h1>
+    <p class="sub">Entenda para que serve, quando pode ser indicado<br>e o que esperar do exame.</p>
 
     <footer class="foot">
-      <div class="pager">01<span class="pager__bars"><i class="on"></i><i></i><i></i><i></i><i></i></span></div>
-      <div class="swipe">Deslize <svg><use href="#arrow"/></svg></div>
+      <span class="count">01 — 05</span>
+      <span class="rule" aria-hidden="true"></span>
+      <div class="swipe">Descubra <svg viewBox="0 0 54 14" preserveAspectRatio="xMaxYMid meet"><use href="#arrow"/></svg></div>
     </footer>
   </section>
 
